@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+            "slnt" 0;
+}
+
+.text-shadow {
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.text-yellow {
+    color: #ffd400;
+}
+
+.bg-yellow {
+    background-color: #ffd400;
+}
+
+button {
+    user-select: none;
+}
+
+
+.btn {
+    @apply bg-white text-black text-2xl font-bold py-2 px-4 rounded h-[64px] w-full;
+
+    &:hover {
+        @apply bg-transparent text-white border-2 border-white;
+    }
+
+    &.btn-outline {
+        @apply bg-transparent text-white border-2 border-white;
+
+        &:hover {
+            @apply bg-white text-black;
+        }
+    }
+
+    &.btn-disabled {
+        @apply bg-zinc-800 text-gray-800 cursor-not-allowed hover:border-0;
+        animation: bgpulse 3s infinite;
+
+        @keyframes bgpulse {
+            0%, 100% {
+                @apply bg-zinc-800;
+            }
+            50% {
+                @apply bg-zinc-700;
+            }
+
+        }
+    }
+
+    &.btn-empty {
+        @apply bg-transparent text-white border-2 border-white flex items-center justify-center cursor-not-allowed opacity-50;
+    }
+}
+
+
