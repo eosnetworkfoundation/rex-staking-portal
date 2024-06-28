@@ -307,18 +307,15 @@ export default class WharfService {
 
     static pendingClaimableBalances(){
         const now = +new Date();
-
         return get(unstakingBalances).filter(x => {
-            let datePlusOneDayAtMidnight = +new Date(+x.date + 1000 * 60 * 60 * 24);
-            return datePlusOneDayAtMidnight >= now;
+            return +x.date >= now;
         });
     }
 
     static claimableBalances(){
         const now = +new Date();
         return get(unstakingBalances).filter(x => {
-            let datePlusOneDayAtMidnight = +new Date(+x.date + 1000 * 60 * 60 * 24);
-            return datePlusOneDayAtMidnight < now;
+            return +x.date < now;
         });
     }
 

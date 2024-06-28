@@ -18,10 +18,9 @@
 
     const now = +new Date();
     $: unstaking = WharfService.pendingClaimableBalances().filter(x => !x.savings).map(x => {
-        const datePlusOneDay = new Date(+new Date(x.date) + 86400000);
         return [
             `${parseFloat(parseFloat(WharfService.convertRexToEos(parseFloat(x.rex.toString())).toString()).toFixed(4))} EOS`,
-            datePlusOneDay.toDateString()];
+            x.date.toDateString()];
     }).sort((a, b) => +new Date(a[1]) - +new Date(b[1]));
 
     $: totalUnstaking = $unstakingBalances.filter(x => !x.savings).reduce((acc, x) => parseFloat(parseFloat((acc + parseFloat(x.rex.toString())).toString()).toFixed(4)), 0);
