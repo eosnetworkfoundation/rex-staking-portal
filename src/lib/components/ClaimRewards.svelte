@@ -1,12 +1,12 @@
 <script>
-    import WharfService, {apr, eosBalance, rexBalance, unstakingBalances} from "$lib/wharf";
+    import WharfService, {eosBalance, rexBalance, unstakingBalances} from "$lib/wharf";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
     import {commaNumber, readableNumber} from "$lib";
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
 
 
-    $: claimable = WharfService.convertRexToEos(WharfService.claimableBalance());
+    $: withdrawable = WharfService.withdrawableBalance();
 
     let loading = false;
     const claim = async () => {
@@ -16,27 +16,26 @@
         loading = false;
     }
 
-    const now = +new Date();
     $: unstaking = WharfService.pendingClaimableBalances().filter(x => !x.savings).map(x => {
         return [
             `${parseFloat(parseFloat(WharfService.convertRexToEos(parseFloat(x.rex.toString())).toString()).toFixed(4))} EOS`,
             x.date.toDateString()];
     }).sort((a, b) => +new Date(a[1]) - +new Date(b[1]));
 
-    $: totalUnstaking = $unstakingBalances.filter(x => !x.savings).reduce((acc, x) => parseFloat(parseFloat((acc + parseFloat(x.rex.toString())).toString()).toFixed(4)), 0);
+    $: totalUnstaking = WharfService.pendingClaimableBalances().filter(x => !x.savings).reduce((acc, x) => parseFloat(parseFloat((acc + parseFloat(x.rex.toString())).toString()).toFixed(4)), 0);
     $: totalUnstakingInEos = parseFloat(parseFloat(WharfService.convertRexToEos(totalUnstaking).toString()).toFixed(4));
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">
 
-    {#if claimable > 0}
+    {#if parseFloat(withdrawable) > 0}
         {#if !loading}
             <button class="btn" on:click={claim}>
                 Claim Rewards
             </button>
 
             <InfoRows class="mt-2" rows={[
-                ["You can claim", `${commaNumber(claimable)} EOS`, "font-black !text-yellow-300"]
+                ["You can claim", `${commaNumber(withdrawable)} EOS`, "font-black !text-yellow-300"]
             ]} />
         {:else}
             <button class="btn btn-disabled" disabled>
@@ -49,14 +48,13 @@
         </figure>
     {/if}
 
-
-    <section class="flex justify-between relative mt-10">
-        <section>
-            <figure class="text-sm">Currently unstaking</figure>
-            <h1 class="text-3xl font-bold -mt-1">{totalUnstakingInEos} EOS</h1>
-        </section>
-    </section>
     {#if unstaking.length}
+        <section class="flex justify-between relative mt-10">
+            <section>
+                <figure class="text-sm">Currently unstaking</figure>
+                <h1 class="text-3xl font-bold -mt-1">{totalUnstakingInEos} EOS</h1>
+            </section>
+        </section>
         <figure class="text-white text-xs text-opacity-50 mt-5">
             Below are your unstaking balances.
         </figure>
@@ -66,8 +64,6 @@
                 ...unstaking
             ]} />
         </section>
-    {:else}
-
     {/if}
 
 

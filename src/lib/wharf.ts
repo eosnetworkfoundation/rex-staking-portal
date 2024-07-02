@@ -6,12 +6,13 @@ import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
 import {showConfetti} from "$lib/index";
 
+export let loadingFromChain:Writable<boolean> = writable(false);
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);
 export let rexBalance:Writable<number> = writable(0);
+export let rexfund:Writable<any> = writable(null);
 export let rexpool:Writable<any> = writable(null);
 export let rawRexBalance:Writable<any> = writable(null);
-export let apr = writable(0.49);
 
 const chains = [
     Chains.EOS,
@@ -94,6 +95,7 @@ export default class WharfService {
         account.set(null)
         eosBalance.set(0)
         rexBalance.set(0)
+        rexfund.set(null)
         unstakingBalances.set([])
         rawRexBalance.set(null)
     }
@@ -107,6 +109,8 @@ export default class WharfService {
 
         const _rexpool = await WharfService.getRexPool();
         if(_rexpool) rexpool.set(_rexpool);
+
+        await WharfService.getRexFund();
 
         const _unstakingBalances = await WharfService.getUnstakingBalances();
         if(_unstakingBalances) {
@@ -184,6 +188,30 @@ export default class WharfService {
         }).catch(err => {
             console.error(err)
             toast.error('There was a problem getting your REX balance. Check the console for more information about what happened.')
+            return null;
+        });
+    }
+
+    static async getRexFund(){
+        if (!WharfService.session) return;
+
+
+        return WharfService.session?.client.v1.chain.get_table_rows({
+            code: "eosio",
+            scope: "eosio",
+            lower_bound: WharfService.session.actor,
+            upper_bound: WharfService.session.actor,
+            table: "rexfund",
+            json: true,
+        }).then((res:any) => {
+            const row = res.rows.find((row:any) => row.owner === WharfService.session?.actor.toString());
+            if(!row) return null;
+
+            rexfund.set(parseFloat(row.balance.split(' ')[0]));
+            return true;
+        }).catch(err => {
+            console.error(err)
+            toast.error('There was a problem getting your REX fund balance. Check the console for more information about what happened.')
             return null;
         });
     }
@@ -319,41 +347,55 @@ export default class WharfService {
         });
     }
 
+    static withdrawableBalance(_claimable:number|null = null){
+        const claimable = _claimable ? _claimable : WharfService.claimableBalance();
+        const withdrawable = parseFloat(get(rexfund) ?? 0);
+        const matured = parseFloat(WharfService.convertRexToEos(claimable).toString());
+        return parseFloat((withdrawable + matured).toString()).toFixed(4);
+    }
+
     static claimableBalance(){
-        return WharfService.claimableBalances().reduce((acc, x) => acc + parseFloat(x.rex.toString()), 0);
+        const maturedRex = get(rawRexBalance) ? get(rawRexBalance).matured_rex / 10000 : 0;
+        return maturedRex + WharfService.claimableBalances().reduce((acc, x) => acc + parseFloat(x.rex.toString()), 0);
     }
 
     static async claim(){
         const claimable = WharfService.claimableBalance();
+        const totalEos = WharfService.withdrawableBalance(claimable);
 
-        if(claimable === 0){
+        if(parseFloat(totalEos) <= 0){
             toast.error('You have no rewards to claim.')
             return null;
         }
 
-        return WharfService.session?.transact({
-            actions: [
-                {
-                    account: "eosio",
-                    name: "sellrex",
-                    authorization: [WharfService.session?.permissionLevel],
-                    data: {
-                        from: WharfService.session?.actor,
-                        rex: `${claimable.toFixed(4)} REX`
-                    },
-                },
-                {
-                    account: "eosio",
-                    name: "withdraw",
-                    authorization: [WharfService.session?.permissionLevel],
-                    data: {
-                        owner: WharfService.session?.actor,
-                        amount: `${WharfService.convertRexToEos(claimable).toFixed(4)} EOS`
-                    }
+        const actions:any[] = [
+            {
+                account: "eosio",
+                name: "withdraw",
+                authorization: [WharfService.session?.permissionLevel],
+                data: {
+                    owner: WharfService.session?.actor,
+                    amount: `${totalEos} EOS`
                 }
-            ]
+            }
+        ]
+
+        if(claimable > 0){
+            actions.unshift({
+                account: "eosio",
+                name: "sellrex",
+                authorization: [WharfService.session?.permissionLevel],
+                data: {
+                    from: WharfService.session?.actor,
+                    rex: `${claimable.toFixed(4)} REX`
+                },
+            })
+        }
+
+        return WharfService.session?.transact({
+            actions: actions as any
         }).then(x => {
-            success(`Successfully claimed ${claimable} EOS!`);
+            success(`Successfully claimed ${totalEos} EOS!`);
             return x;
         }).catch(err => {
             console.error(err)

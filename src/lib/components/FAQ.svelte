@@ -37,6 +37,13 @@
             `,
         },
         {
+            question: 'Why was my matured position automatically sold?',
+            answer:`
+                After you unstake and wait the 21 days, your position will automatically be sold when you do any action (like staking or unstaking).
+                You will still need to claim those rewards, but your will not continue to produce yield on the matured position.
+            `,
+        },
+        {
             question: 'Can I immediately unstake and get my EOS back?',
             answer:`
                 No, you must wait 21 days once you unstake.

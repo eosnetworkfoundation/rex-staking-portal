@@ -12,5 +12,6 @@ export const readableNumber = (num: number) => {
 }
 
 export const commaNumber = (num: any) => {
+    if(isNaN(num) || num === null || num === undefined) return 0;
     return parseFloat(num).toLocaleString();
 }

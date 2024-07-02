@@ -1,11 +1,12 @@
 <script>
-    import WharfService, {apr, eosBalance, rexpool} from "$lib/wharf";
+    import WharfService, {account, eosBalance, rexpool} from "$lib/wharf";
     import TokenInput from "$lib/components/TokenInput.svelte";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
     import {commaNumber, readableNumber} from "$lib";
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
+    import {toast} from "svelte-sonner";
 
     let amount = 0;
     $: rexReturn = WharfService.convertEosToRex(amount);
@@ -16,6 +17,9 @@
 
     let loading = false;
     const buy = async () => {
+        if(!$account){
+            return WharfService.login();
+        }
         if (loading) return;
         loading = true;
         if(await WharfService.buyRex(amount)){
@@ -45,18 +49,6 @@
                 class="mt-8"
     />
 
-<!--    <section class="flex border rounded border-white border-opacity-10 p-2 mt-4">-->
-<!--        <input type="checkbox" class="w-8 h-8" />-->
-<!--        <section class="">-->
-<!--            <figure class="text-sm font-bold text-white text-opacity-80 ml-2">-->
-<!--                Start unstaking immediately-->
-<!--            </figure>-->
-<!--            <figure class="text-xs text-white text-opacity-50 ml-2">-->
-<!--                You can only withdraw your staked tokens 21 days after you start the unstaking process.-->
-<!--            </figure>-->
-<!--        </section>-->
-<!--    </section>-->
-
     {#if !loading}
         <button class="btn mt-5" on:click={buy}>
             Stake
@@ -68,13 +60,12 @@
     {/if}
 
     <InfoRows class="mt-2" rows={[
-        // ["You will get", `${rexReturn} REX`, "opacity-70"],
         ["You will stake", `${commaNumber(amount)} EOS`, "opacity-70"],
-        ["Estimated yield", `${commaNumber(amount*$apr)} EOS`, "font-black !text-yellow-300"]
+        ["Estimated yield", `${commaNumber(amount*(apy/100))} EOS`, "font-black !text-yellow-300"]
     ]} />
 
     <InfoBox class="mt-10">
-        The APR is an estimate, and may fluctuate based on how many and much others are staking.
+        The APY is an estimate, and may fluctuate based on how many and much others are staking.
         Your 21 day lockup period starts when you unstake your EOS.
         <br />
         <br />
