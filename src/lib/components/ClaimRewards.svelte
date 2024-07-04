@@ -1,12 +1,15 @@
 <script>
-    import WharfService, {eosBalance, rexBalance, unstakingBalances} from "$lib/wharf";
+    import WharfService, {eosBalance, rawRexBalance, rexBalance, unstakingBalances} from "$lib/wharf";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
     import {commaNumber, readableNumber} from "$lib";
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
 
 
-    $: withdrawable = WharfService.withdrawableBalance();
+    $: withdrawable = ((_) => {
+
+        return WharfService.withdrawableBalance();
+    })($rawRexBalance);
 
     let loading = false;
     const claim = async () => {
