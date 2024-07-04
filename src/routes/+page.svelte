@@ -11,7 +11,8 @@
     import Unstake from "$lib/components/Unstake.svelte";
     import ClaimRewards from "$lib/components/ClaimRewards.svelte";
     import BlurryBg from "$lib/components/BlurryBg.svelte";
-    import {showConfetti} from "$lib";
+    import {isLive, showConfetti} from "$lib";
+    import {goto} from "$app/navigation";
 
     enum Panels {
         Stake = "stake",
@@ -22,6 +23,9 @@
     let activePanel: Panels = Panels.Stake;
 
     onMount(() => {
+        if(!isLive()){
+            goto('/countdown')
+        }
         WharfService.init();
     })
 

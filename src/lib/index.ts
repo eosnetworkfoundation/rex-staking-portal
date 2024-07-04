@@ -15,3 +15,6 @@ export const commaNumber = (num: any) => {
     if(isNaN(num) || num === null || num === undefined) return 0;
     return parseFloat(num).toLocaleString();
 }
+
+export const liveDate = +new Date("2024-07-08T00:00:00.000");
+export const isLive = () => liveDate < +new Date();
