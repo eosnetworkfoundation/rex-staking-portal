@@ -43,6 +43,7 @@ deps
 dist
 node_modules
 out
+package
 target
 tmp
 
@@ -127,8 +128,11 @@ node_modules
 npm-debug.log*
 .nuxt
 .serverless
+.svelte-kit
 *.tsbuildinfo
 typings
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
 yarn-debug.log*
 yarn-error.log*
 .yarn-integrity
