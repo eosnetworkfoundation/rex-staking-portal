@@ -10,3 +10,4 @@ echo -e '\e[1;36mURL: https://localhost:8443\e[0m'
 echo -e '\e[1;93mPress [Ctrl] + C to exit...\e[0m'
 
 ee "docker run -v \"\$(git rev-parse --show-toplevel):/http\" -w '/http' -p '8443:8443' caddy caddy run --config caddyfile"
+echo "Done. - ${BASH_SOURCE[0]}"
