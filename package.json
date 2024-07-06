@@ -9,7 +9,7 @@
     "dev": "vite dev",
     "preview": "vite preview",
     "reset": "scripts/reset.sh",
-    "serve": "scripts/serve.sh"
+    "start": "scripts/start.sh"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",

@@ -21,7 +21,7 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
     1. [Prerequisites](#prerequisites)
     1. [Initialization](#initialization)
     1. [Build](#build)
-    1. [Serve](#serve)
+    1. [Start](#start)
 1. [See Also](#see-also)
 
 <!-- contents markdown end -->
@@ -71,10 +71,10 @@ yarn build
 ```
 The "build" generates a `build` folder in the root of the repo that can be uploaded directly to AWS S3 using the web console, AWS CLI, or with something like ~~Terraform~~ Tofu.
 
-### Serve
+### Start
 Running this...
 ```bash
-yarn serve
+yarn start
 ```
 ...uses [Caddy](https://caddyserver.com) in `file_server` mode to publish the build artifacts in the `build` folder in the root of the repo at port `8443` to emulate an S3 bucket. You can load this in your browser by navigating to [https://localhost:8443](https://localhost:8443).
 
