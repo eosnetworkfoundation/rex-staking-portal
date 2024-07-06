@@ -20,6 +20,9 @@
     "reset": "scripts/reset.sh",
     "start": "scripts/start.sh"
   },
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-netlify": "^4.2.0",
