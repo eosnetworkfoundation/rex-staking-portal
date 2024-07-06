@@ -9,6 +9,7 @@
     "email": "webmaster@eosnetwork.com",
     "url": "https://eosnetwork.com"
   },
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "vite build",
