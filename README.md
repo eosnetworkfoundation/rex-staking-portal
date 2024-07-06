@@ -76,7 +76,7 @@ Running this...
 ```bash
 yarn start
 ```
-...uses [Caddy](https://caddyserver.com) in `file_server` mode to publish the build artifacts in the `build` folder in the root of the repo at port `8443` to emulate an S3 bucket. You can load this in your browser by navigating to [https://localhost:8443](https://localhost:8443).
+...uses the [Caddy](https://caddyserver.com) docker container in `file_server` mode to publish the build artifacts in the `build` folder in the root of the repo at port `8443` to emulate an S3 bucket. You can load this in your browser by navigating to [https://localhost:8443](https://localhost:8443).
 
 Press `[Ctrl]` + `[C]` to stop the server.
 
