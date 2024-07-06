@@ -20,6 +20,7 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
 1. [Development](#development)
     1. [Prerequisites](#prerequisites)
     1. [Initialization](#initialization)
+    1. [Build](#build)
 1. [See Also](#see-also)
 
 <!-- contents markdown end -->
@@ -61,6 +62,13 @@ nvm install
 yarn
 ```
 Easy.
+
+### Build
+This is how release artifacts are generated.
+```bash
+yarn build
+```
+The "build" generates a `build` folder in the root of the repo that can be uploaded directly to AWS S3 using the web console, AWS CLI, or with something like ~~Terraform~~ Tofu.
 
 ## See Also
 More resources.
