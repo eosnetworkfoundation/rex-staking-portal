@@ -9,7 +9,7 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
 <table>
 <tr/>
 <tr>
-<td width="225">
+<td width="300">
 <p/>
 <div align="center">
 <b>Contents</b>
