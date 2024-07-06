@@ -8,6 +8,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "dev": "vite dev",
     "preview": "vite preview",
+    "reset": "scripts/reset.sh",
     "serve": "scripts/serve.sh"
   },
   "devDependencies": {
