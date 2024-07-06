@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "private": true,
+  "engineStrict": true,
   "scripts": {
     "build": "vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
