@@ -1,0 +1,9 @@
+:8443 {
+    root * ./build
+    file_server
+    encode gzip
+
+    tls internal {
+        on_demand
+    }
+}
