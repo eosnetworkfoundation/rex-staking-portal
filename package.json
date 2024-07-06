@@ -1,6 +1,7 @@
 {
   "name": "@eosnetwork/rex-staking",
   "version": "0.0.1",
+  "description": "Static Svelte website that simplifies the process of staking, un-staking, and claiming EOS REX rewards post-tokenomics-2 upgrade.",
   "private": true,
   "scripts": {
     "build": "vite build",
