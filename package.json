@@ -1,7 +1,17 @@
 {
   "name": "@eosnetwork/rex-staking",
   "version": "0.0.1",
+  "description": "Static Svelte website that simplifies the process of staking, un-staking, and claiming EOS REX rewards post-tokenomics-2 upgrade.",
+  "repository": "git@github.com:eosnetworkfoundation/rex-staking-portal.git",
+  "homepage": "https://github.com/eosnetworkfoundation/rex-staking-portal",
+  "author": {
+    "name": "EOS Network Foundation Automation",
+    "email": "webmaster@eosnetwork.com",
+    "url": "https://eosnetwork.com"
+  },
+  "license": "MIT",
   "private": true,
+  "engineStrict": true,
   "scripts": {
     "build": "vite build",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -11,6 +21,9 @@
     "reset": "scripts/reset.sh",
     "start": "scripts/start.sh"
   },
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-netlify": "^4.2.0",

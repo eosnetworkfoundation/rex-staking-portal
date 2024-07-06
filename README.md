@@ -22,6 +22,7 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
     1. [Initialization](#initialization)
     1. [Build](#build)
     1. [Start](#start)
+    1. [Pack](#pack)
 1. [See Also](#see-also)
 
 <!-- contents markdown end -->
@@ -76,9 +77,38 @@ Running this...
 ```bash
 yarn start
 ```
-...uses [Caddy](https://caddyserver.com) in `file_server` mode to publish the build artifacts in the `build` folder in the root of the repo at port `8443` to emulate an S3 bucket. You can load this in your browser by navigating to [https://localhost:8443](https://localhost:8443).
+...uses the [Caddy](https://caddyserver.com) docker container in `file_server` mode to publish the build artifacts in the `build` folder in the root of the repo at port `8443` to emulate an S3 bucket. You can load this in your browser by navigating to [https://localhost:8443](https://localhost:8443).
 
 Press `[Ctrl]` + `[C]` to stop the server.
+
+### Pack
+You can pack the build products into a `*.tgz` archive for easy distribution.
+```bash
+yarn pack
+```
+This will generate a `*.tgz` archive in the root of the repo with a structure like this.
+```
+eosnetwork-rex-staking-v0.0.1.tgz
+└── package
+    ├── build
+    │   ├── abis
+    │   │   └── eosio.system.abi
+    │   ├── _app
+    │   │   ├── env.js
+    │   │   ├── immutable
+    │   │   │   ├── assets
+    │   │   │   ├── chunks
+    │   │   │   ├── entry
+    │   │   │   └── nodes
+    │   │   └── version.json
+    │   ├── favicon.png
+    │   ├── index.html
+    │   └── ogimage.png
+    ├── LICENSE
+    ├── package.json
+    └── README.md
+```
+This is useful for sharing the project with others or for deploying it to a server, but is in no way required for the site to function.
 
 ## See Also
 More resources.
