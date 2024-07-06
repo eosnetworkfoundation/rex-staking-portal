@@ -17,6 +17,7 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
 <p/>
 <!-- contents markdown begin -->
 
+1. [Development](#development)
 1. [See Also](#see-also)
 
 <!-- contents markdown end -->
@@ -25,6 +26,12 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
 </tr>
 </table>
 <!-- contents box end -->
+
+## Development
+Start here to build this project or to contribute to this repo.
+
+> [!NOTE]
+> The source of truth for the version of nodeJS this project supports is the [`.nvmrc`](./.nvmrc) file. Backward- or forward-compatibility with other versions of `node` is made on a best-effort basis, but is not guaranteed.
 
 ## See Also
 More resources.
