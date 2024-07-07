@@ -55,4 +55,4 @@ else
     ee "aws cloudfront wait invalidation-completed --distribution-id \"\$CF_DISTRIBUTION\" --id '$INVALIDATION_ID'"
     echo "::notice title=Deployed v$(cat package.json | jq -r .version) to Production Worldwide::Frontend v$(cat package.json | jq -r .version) has been successfully uploaded and the content delivery network has been refreshed worldwide. This is live in production."
 fi
-echo 'Done! - frontend-publish.sh'
+echo "Done. - ${BASH_SOURCE[0]}"

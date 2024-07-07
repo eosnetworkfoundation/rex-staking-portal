@@ -65,4 +65,4 @@ cat package.json | jq -c \
 ee 'cat dist/package.json | jq .git'
 # pack dist folder
 ee 'tar -czf dist.tar.gz dist/*'
-echo 'Done! - frontend-build.sh'
+echo "Done. - ${BASH_SOURCE[0]}"

@@ -21,4 +21,4 @@ else
     echo '::set-output name=dry-run::true'
     echo "::set-output name=role-arn::$FRONTEND_RO_IAM_ARN"
 fi
-echo 'Done. - frontend-aws-role.sh'
+echo "Done. - ${BASH_SOURCE[0]}"
