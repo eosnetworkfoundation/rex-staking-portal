@@ -49,4 +49,8 @@ mv temp.json package.json
 ee 'cat package.json | jq .git'
 # package website
 ee 'yarn pack'
+PACKAGE_NAME="$(cat package.json | jq -r '.name' | tr -d '@' | tr '/' '-')"
+PACKAGE_VERSION="$(cat package.json | jq -r '.version')"
+PACKAGE_TAR="$PACKAGE_NAME-v$PACKAGE_VERSION.tgz"
+mv "$PACKAGE_TAR" dist.tar.gz
 echo "Done. - ${BASH_SOURCE[0]}"
