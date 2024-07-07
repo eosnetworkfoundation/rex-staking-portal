@@ -60,9 +60,9 @@ jobs:
       - name: Download Matrix Artifacts
         uses: actions/download-artifact@v3
 
-      - name: Publish Frontend
+      - name: Publish Website
         run: .github/workflows/frontend-publish.sh
         env:
-          CF_DISTRIBUTION: ${{ secrets.FRONTEND_PROD_CF_DISTRIBUTION }}
+          CF_DISTRIBUTION: ${{ secrets.STAKING_PROD_CF_DISTRIBUTION }}
           DRY_RUN: ${{ steps.aws-context.outputs.dry-run }}
-          S3_BUCKET: ${{ secrets.FRONTEND_PROD_S3_BUCKET }}
+          S3_BUCKET: ${{ secrets.STAKING_PROD_S3_BUCKET }}
