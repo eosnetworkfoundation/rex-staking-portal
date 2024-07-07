@@ -1,4 +1,4 @@
-name: Staking Frontend CICD
+name: Staking Portal CICD
 
 on: [push, workflow_dispatch]
 
@@ -10,7 +10,7 @@ jobs:
       matrix:
         node-version: [20]
 
-    name: Static Frontend Build - nodeJS v${{ matrix.node-version }}
+    name: Static Build - nodeJS v${{ matrix.node-version }}
 
     steps:
       - name: Checkout Repo
@@ -23,10 +23,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Static Frontend Build - node v${{ matrix.node-version }}
+      - name: Static Build - node v${{ matrix.node-version }}
         run: .github/workflows/frontend-build.sh
-        env:
-          BACKEND_API: ${{ secrets.BACKEND_API }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
