@@ -16,5 +16,5 @@ export const commaNumber = (num: any) => {
     return parseFloat(num).toLocaleString();
 }
 
-export const liveDate = +new Date("2024-07-08T13:00:00.000");
+export const liveDate = +new Date(Date.UTC(2024, 6, 8, 13, 0, 0, 0));
 export const isLive = () => liveDate < +new Date();
