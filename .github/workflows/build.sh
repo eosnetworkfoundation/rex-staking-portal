@@ -12,8 +12,6 @@ exec 9>&1 # enable tee to write to STDOUT as a file
 ee node --version
 ee yarn --version
 ee npm --version
-# generate static site
-ee yarn build
 # add metadata
 echo 'Packing website metadata into distribution.'
 cat package.json | jq \
@@ -45,6 +43,8 @@ cat package.json | jq \
     }' > temp.json
 mv temp.json package.json
 ee 'cat package.json | jq .git'
+# generate static site
+ee yarn build
 # package website
 ee 'yarn pack'
 PACKAGE_NAME="$(cat package.json | jq -r '.name' | tr -d '@' | tr '/' '-')"
