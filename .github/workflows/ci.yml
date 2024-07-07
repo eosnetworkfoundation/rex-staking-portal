@@ -26,6 +26,9 @@ jobs:
       - name: Init - node v${{ matrix.node-version }}
         run: yarn --frozen-lockfile --non-interactive
 
+      - name: Lint - node v${{ matrix.node-version }}
+        run: yarn check
+
       - name: Static Build - node v${{ matrix.node-version }}
         run: .github/workflows/build.sh
 
