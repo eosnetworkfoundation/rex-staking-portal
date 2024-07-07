@@ -14,11 +14,11 @@ if [[ "$GITHUB_REF_TYPE" == 'tag' ]]; then
     fi
     echo '::notice title=Deploying to Production::This build will attempt to deploy to production. This is the real deal!'
     echo '::set-output name=dry-run::false'
-    echo "::set-output name=role-arn::$FRONTEND_PROD_IAM_ARN"
+    echo "::set-output name=role-arn::$STAKING_PROD_IAM_ARN"
 else
     echo "Found git $GITHUB_REF_TYPE \"$GITHUB_REF_NAME,\" performing a dry-run."
     echo '::notice title=Dry Run::This build is performing a dry run. A dry run attemps to verify everything is good to go without actually changing anything.'
     echo '::set-output name=dry-run::true'
-    echo "::set-output name=role-arn::$FRONTEND_RO_IAM_ARN"
+    echo "::set-output name=role-arn::$STAKING_RO_IAM_ARN"
 fi
 echo "Done. - ${BASH_SOURCE[0]}"

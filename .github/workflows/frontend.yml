@@ -47,8 +47,8 @@ jobs:
         id: aws-context
         run: .github/workflows/frontend-aws-context.sh
         env:
-          FRONTEND_PROD_IAM_ARN: ${{ secrets.FRONTEND_PROD_IAM_ARN }}
-          FRONTEND_RO_IAM_ARN: ${{ secrets.FRONTEND_RO_IAM_ARN }}
+          STAKING_PROD_IAM_ARN: ${{ secrets.STAKING_PROD_IAM_ARN }}
+          STAKING_RO_IAM_ARN: ${{ secrets.STAKING_RO_IAM_ARN }}
 
       - name: Authenticate to AWS
         uses: aws-actions/configure-aws-credentials@v1-node16
