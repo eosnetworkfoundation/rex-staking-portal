@@ -24,7 +24,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Static Build - node v${{ matrix.node-version }}
-        run: .github/workflows/frontend-build.sh
+        run: .github/workflows/build.sh
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
