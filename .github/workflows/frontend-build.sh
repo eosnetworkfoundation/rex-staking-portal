@@ -12,27 +12,10 @@ exec 9>&1 # enable tee to write to STDOUT as a file
 ee node --version
 ee yarn --version
 ee npm --version
-if [[ ! -z "$BACKEND_API" ]]; then
-    ee 'printf "$BACKEND_API" | wc -c'
-    export BACKEND_API_TEST='curl -fsSL "$BACKEND_API/test"'
-    echo "$ $BACKEND_API_TEST"
-    export BACKEND_UP="$(eval "$BACKEND_API_TEST" | tee >(cat - >&9))"
-    echo
-    if [[ "$BACKEND_UP" == 'true' ]]; then
-        echo 'Backend API is up!'
-    else
-        printf '\e[93mWARNING: Failed to connect to backend API!\e[0m\n'
-        echo '::warning title=Failed to Connect to Backend API::Failed to connect to backend API!'
-    fi
-else
-    printf '\e[93mWARNING: BACKEND_API is not defined!\e[0m\n'
-    echo '::warning title=Backend API Endpoint Missing::BACKEND_API is not defined!'
-fi
 # init
-ee pushd frontend
 ee yarn --frozen-lockfile
 # generate static site
-ee yarn generate --fail-on-error
+ee yarn build
 # add metadata
 echo 'Packing website metadata into distribution.'
 cat package.json | jq -c \
@@ -61,8 +44,9 @@ cat package.json | jq -c \
         $repo,
         tag: ($tag | if . == "" then null else . end),
         $triggering_actor
-    }' > dist/package.json
-ee 'cat dist/package.json | jq .git'
-# pack dist folder
-ee 'tar -czf dist.tar.gz dist/*'
+    }' > temp.json
+mv temp.json package.json
+ee 'cat package.json | jq .git'
+# package website
+ee 'yarn pack'
 echo "Done. - ${BASH_SOURCE[0]}"
