@@ -45,7 +45,7 @@ jobs:
 
       - name: Determine AWS Context
         id: aws-context
-        run: .github/workflows/frontend-aws-context.sh
+        run: .github/workflows/aws-context.sh
         env:
           STAKING_PROD_IAM_ARN: ${{ secrets.STAKING_PROD_IAM_ARN }}
           STAKING_RO_IAM_ARN: ${{ secrets.STAKING_RO_IAM_ARN }}
