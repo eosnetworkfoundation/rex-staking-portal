@@ -3,10 +3,10 @@ set -eo pipefail
 if [[ "$GITHUB_REF_TYPE" == 'tag' ]]; then
     echo "Found git $GITHUB_REF_TYPE \"$GITHUB_REF_NAME,\" attempting a production deployment."
     export GIT_TAG="$(git --no-pager tag --points-at HEAD)"
-    export FRONTEND_VERSION="v$(cat package.json | jq -r '.version')"
-    if [[ "$FRONTEND_VERSION" != "$GIT_TAG" || "$GIT_TAG" != "$GITHUB_REF_NAME" ]]; then
-        echo '::error title=Version String Mismatch:: Frontend package.json version string does not match the git tag!'
-        echo "FRONTEND_VERSION='$FRONTEND_VERSION'"
+    export PACKAGE_VERSION="v$(cat package.json | jq -r '.version')"
+    if [[ "$PACKAGE_VERSION" != "$GIT_TAG" || "$GIT_TAG" != "$GITHUB_REF_NAME" ]]; then
+        echo '::error title=Version String Mismatch:: The package.json version string does not match the git tag!'
+        echo "PACKAGE_VERSION='$PACKAGE_VERSION'"
         echo "GITHUB_REF_NAME='$GITHUB_REF_NAME'"
         echo "GIT_TAG='$GIT_TAG'"
         cat package.json | jq '.'
