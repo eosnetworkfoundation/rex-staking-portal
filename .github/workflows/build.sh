@@ -12,8 +12,6 @@ exec 9>&1 # enable tee to write to STDOUT as a file
 ee node --version
 ee yarn --version
 ee npm --version
-# init
-ee yarn --frozen-lockfile
 # generate static site
 ee yarn build
 # add metadata
