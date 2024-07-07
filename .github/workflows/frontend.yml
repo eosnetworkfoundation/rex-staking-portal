@@ -61,7 +61,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Publish Website
-        run: .github/workflows/frontend-publish.sh
+        run: .github/workflows/publish.sh
         env:
           CF_DISTRIBUTION: ${{ secrets.STAKING_PROD_CF_DISTRIBUTION }}
           DRY_RUN: ${{ steps.aws-context.outputs.dry-run }}
