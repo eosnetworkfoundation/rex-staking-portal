@@ -1,4 +1,4 @@
-name: Staking Portal CICD
+name: Staking Portal CI
 
 on: [push, workflow_dispatch]
 
@@ -10,7 +10,7 @@ jobs:
       matrix:
         node-version: [20]
 
-    name: Static Build - nodeJS v${{ matrix.node-version }}
+    name: Build rex-staking-portal - nodeJS v${{ matrix.node-version }}
 
     steps:
       - name: Checkout Repo
@@ -33,7 +33,7 @@ jobs:
           path: dist.tar.gz
 
   aws:
-    name: AWS Authentication
+    name: Publish rex-staking-portal
     runs-on: ubuntu-latest
     needs: build
     permissions:
