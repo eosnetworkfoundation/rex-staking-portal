@@ -1,4 +1,4 @@
-name: DevHub Frontend CICD
+name: Staking Frontend CICD
 
 on: [push, workflow_dispatch]
 
@@ -26,13 +26,13 @@ jobs:
       - name: Static Frontend Build - node v${{ matrix.node-version }}
         run: .github/workflows/frontend-build.sh
         env:
-          DEVHUB_BACKEND_API: ${{ secrets.DEVHUB_BACKEND_API }}
+          BACKEND_API: ${{ secrets.BACKEND_API }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist-node-${{ matrix.node-version }}
-          path: frontend/dist.tar.gz
+          path: dist.tar.gz
 
   aws:
     name: AWS Authentication
@@ -49,8 +49,8 @@ jobs:
         id: aws-context
         run: .github/workflows/frontend-aws-context.sh
         env:
-          DEVHUB_FRONTEND_PROD_IAM_ARN: ${{ secrets.DEVHUB_FRONTEND_PROD_IAM_ARN }}
-          DEVHUB_FRONTEND_RO_IAM_ARN: ${{ secrets.DEVHUB_FRONTEND_RO_IAM_ARN }}
+          FRONTEND_PROD_IAM_ARN: ${{ secrets.FRONTEND_PROD_IAM_ARN }}
+          FRONTEND_RO_IAM_ARN: ${{ secrets.FRONTEND_RO_IAM_ARN }}
 
       - name: Authenticate to AWS
         uses: aws-actions/configure-aws-credentials@v1-node16
@@ -65,6 +65,6 @@ jobs:
       - name: Publish Frontend
         run: .github/workflows/frontend-publish.sh
         env:
-          CF_DISTRIBUTION: ${{ secrets.DEVHUB_FRONTEND_PROD_CF_DISTRIBUTION }}
+          CF_DISTRIBUTION: ${{ secrets.FRONTEND_PROD_CF_DISTRIBUTION }}
           DRY_RUN: ${{ steps.aws-context.outputs.dry-run }}
-          S3_BUCKET: ${{ secrets.DEVHUB_FRONTEND_PROD_S3_BUCKET }}
+          S3_BUCKET: ${{ secrets.FRONTEND_PROD_S3_BUCKET }}

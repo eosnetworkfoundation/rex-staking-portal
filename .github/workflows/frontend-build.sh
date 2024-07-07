@@ -12,21 +12,21 @@ exec 9>&1 # enable tee to write to STDOUT as a file
 ee node --version
 ee yarn --version
 ee npm --version
-if [[ ! -z "$DEVHUB_BACKEND_API" ]]; then
-    ee 'printf "$DEVHUB_BACKEND_API" | wc -c'
-    export BACKEND_API_TEST='curl -fsSL "$DEVHUB_BACKEND_API/test"'
+if [[ ! -z "$BACKEND_API" ]]; then
+    ee 'printf "$BACKEND_API" | wc -c'
+    export BACKEND_API_TEST='curl -fsSL "$BACKEND_API/test"'
     echo "$ $BACKEND_API_TEST"
     export BACKEND_UP="$(eval "$BACKEND_API_TEST" | tee >(cat - >&9))"
     echo
     if [[ "$BACKEND_UP" == 'true' ]]; then
-        echo 'DevHub backend API is up!'
+        echo 'Backend API is up!'
     else
-        printf '\e[93mWARNING: Failed to connect to DevHub backend API!\e[0m\n'
-        echo '::warning title=Failed to Connect to DevHub Backend API::Failed to connect to DevHub backend API!'
+        printf '\e[93mWARNING: Failed to connect to backend API!\e[0m\n'
+        echo '::warning title=Failed to Connect to Backend API::Failed to connect to backend API!'
     fi
 else
-    printf '\e[93mWARNING: DEVHUB_BACKEND_API is not defined!\e[0m\n'
-    echo '::warning title=DevHub Backend API Endpoint Missing::DEVHUB_BACKEND_API is not defined!'
+    printf '\e[93mWARNING: BACKEND_API is not defined!\e[0m\n'
+    echo '::warning title=Backend API Endpoint Missing::BACKEND_API is not defined!'
 fi
 # init
 ee pushd frontend
