@@ -3,6 +3,19 @@ name: Staking Portal CI
 on: [push, workflow_dispatch]
 
 jobs:
+  documentation:
+    name: Attach Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'false'
+
+      - name: Attach Documentation
+        run: cat .github/workflows/ci.md >> $GITHUB_STEP_SUMMARY
+
   build:
     runs-on: ubuntu-latest
 
