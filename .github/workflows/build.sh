@@ -18,7 +18,7 @@ ee yarn --frozen-lockfile
 ee yarn build
 # add metadata
 echo 'Packing website metadata into distribution.'
-cat package.json | jq -c \
+cat package.json | jq \
     --arg actor "$GITHUB_ACTOR" \
     --arg branch "$(git branch --show-current)" \
     --arg branchFromTag "$(git branch --contains 'tags/v0.1.0' | tail -n +2 | tail -n 1 | tr -d '[:space:]')" \
