@@ -12,6 +12,7 @@
                     </defs>
                 </svg>`,
             link: 'https://www.tokenpocket.pro/',
+            guide:'https://help.tokenpocket.pro/en/wallet-operation/how-to-create-a-wallet/eos',
         },
         {
             name: 'Anchor Wallet',
@@ -26,31 +27,39 @@
                     </svg>
                     `,
             link: 'https://www.greymass.com/anchor',
+            guide: 'https://support.greymass.com/support/solutions/articles/72000569847-account-creation-on-desktop',
         }
     ]
 </script>
 
 <section class="my-10 w-full">
 
-    <figure class="text-white text-center">
+    <figure class="text-white text-center opacity-50 font-bold">
         Need an EOS account?
     </figure>
 
-    <section class="w-full flex items-center justify-center gap-2 mt-1 max-lg:flex-col">
+    <section class="w-full flex items-center justify-center gap-2 mt-1 max-lg:flex-col max-lg:gap-10">
 
         {#each wallets as wallet}
-            <a href={wallet.link} target="_blank" rel="noopener noreferrer">
-                <section class="w-[220px] max-lg:w-full rounded-lg border border-white border-opacity-35 p-3 flex gap-3 cursor-pointer text-white hover:bg-white hover:text-black ">
-                    <figure>
-                        {@html wallet.logo}
-                    </figure>
-                    <figure class="leading-tight">
-                        Download
-                        <br />
-                        <b>{wallet.name}</b>
-                    </figure>
-                </section>
-            </a>
+            <section class="max-lg:w-full">
+                <a href={wallet.link} target="_blank" rel="noopener noreferrer">
+                    <section class="w-[220px] max-lg:w-full rounded-lg border border-white border-opacity-35 p-3 flex gap-3 cursor-pointer text-white hover:bg-white hover:text-black ">
+                        <figure>
+                            {@html wallet.logo}
+                        </figure>
+                        <figure class="leading-tight">
+                            Download
+                            <br />
+                            <b>{wallet.name}</b>
+                        </figure>
+                    </section>
+                </a>
+                <figure class="text-white text-center text-xs mt-1 max-lg:text-right max-lg:text-sm">
+                    <a href={wallet.guide} target="_blank" rel="noopener noreferrer" class=" hover:underline px-2 py-2 inline-flex">
+                        Read how-to guide
+                    </a>
+                </figure>
+            </section>
         {/each}
 
     </section>
