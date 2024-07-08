@@ -1,6 +1,7 @@
 <script lang="ts">
     import "$lib/app.scss";
     import { Toaster } from 'svelte-sonner'
+    import GoogleAnalytics from "$lib/components/analytics/GoogleAnalytics.svelte";
 
     const title = 'EOS Staking'
     const description = 'Stake your EOS tokens and earn rewards'
@@ -20,6 +21,8 @@
     <meta property="og:url" content={url} />
     <meta property="og:site_name" content={title} />
 </svelte:head>
+
+<GoogleAnalytics />
 
 <Toaster />
 
