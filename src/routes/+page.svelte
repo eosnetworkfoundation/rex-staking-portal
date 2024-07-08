@@ -13,6 +13,7 @@
     import BlurryBg from "$lib/components/BlurryBg.svelte";
     import {isLive, showConfetti} from "$lib";
     import {goto} from "$app/navigation";
+    import { page } from '$app/stores';
 
     enum Panels {
         Stake = "stake",
@@ -22,8 +23,10 @@
 
     let activePanel: Panels = Panels.Stake;
 
+
+
     onMount(() => {
-        if(!isLive()){
+        if(!$page.url.searchParams.get("forceopen") && !isLive()){
             goto('/countdown')
         }
         WharfService.init();

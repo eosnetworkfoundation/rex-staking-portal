@@ -260,27 +260,43 @@ export default class WharfService {
 
         const amount = `${eos.toFixed(4)} EOS`
 
-        return WharfService.session?.transact({
-            actions: [
-                {
-                    account: "eosio",
-                    name: "deposit",
-                    authorization: [WharfService.session?.permissionLevel],
-                    data: {
-                        owner: WharfService.session?.actor,
-                        amount
-                    }
-                },
-                {
-                    account: "eosio",
-                    name: "buyrex",
-                    authorization: [WharfService.session?.permissionLevel],
-                    data: {
-                        from: WharfService.session?.actor,
-                        amount
-                    }
+        const actions:any[] = [
+            {
+                account: "eosio",
+                name: "deposit",
+                authorization: [WharfService.session?.permissionLevel],
+                data: {
+                    owner: WharfService.session?.actor,
+                    amount
                 }
-            ]
+            },
+            {
+                account: "eosio",
+                name: "buyrex",
+                authorization: [WharfService.session?.permissionLevel],
+                data: {
+                    from: WharfService.session?.actor,
+                    amount
+                }
+            }
+        ];
+
+        // claimable balance
+        const maturedRex = get(rawRexBalance) ? get(rawRexBalance).matured_rex / 10000 : 0;
+        if(maturedRex > 0 && maturedRex < 10000){
+            actions.unshift({
+                account: "eosio",
+                name: "mvtosavings",
+                authorization: [WharfService.session?.permissionLevel],
+                data: {
+                    owner: WharfService.session?.actor,
+                    rex: `${maturedRex.toFixed(4)} REX`
+                }
+            });
+        }
+
+        return WharfService.session?.transact({
+            actions
         } as any).then(x => {
             success(`Successfully staked ${eos} EOS!`);
             return x;
