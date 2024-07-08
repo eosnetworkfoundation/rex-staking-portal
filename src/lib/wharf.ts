@@ -281,16 +281,15 @@ export default class WharfService {
             }
         ];
 
-        // claimable balance
-        const maturedRex = get(rawRexBalance) ? get(rawRexBalance).matured_rex / 10000 : 0;
-        if(maturedRex > 0 && maturedRex < 10000){
+        const claimableBalance = WharfService.claimableBalance();
+        if(claimableBalance > 0 && claimableBalance < 10000){
             actions.unshift({
                 account: "eosio",
                 name: "mvtosavings",
                 authorization: [WharfService.session?.permissionLevel],
                 data: {
                     owner: WharfService.session?.actor,
-                    rex: `${maturedRex.toFixed(4)} REX`
+                    rex: `${claimableBalance.toFixed(4)} REX`
                 }
             });
         }
