@@ -35,6 +35,10 @@ You can see it live at [https://stake.eosnetwork.com](https://stake.eosnetwork.c
 ## Development
 Start here to build this project or to contribute to this repo.
 
+```bash
+yarn dev
+```
+
 > [!NOTE]
 > The source of truth for the version of nodeJS this project supports is the [`.nvmrc`](./.nvmrc) file. Backward- or forward-compatibility with other versions of `node` is made on a best-effort basis, but is not guaranteed.
 

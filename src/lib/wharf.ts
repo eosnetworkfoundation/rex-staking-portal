@@ -1,5 +1,5 @@
 import {Session, SessionKit, Chains} from "@wharfkit/session"
-import { APIClient } from "@wharfkit/antelope"
+import { APIClient, Asset, Int64 } from "@wharfkit/antelope"
 import {get, writable, type Writable} from "svelte/store";
 import {TransactPluginResourceProvider} from "@wharfkit/transact-plugin-resource-provider";
 import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
@@ -12,6 +12,7 @@ export let eosBalance:Writable<number> = writable(0);
 export let rexBalance:Writable<number> = writable(0);
 export let rexfund:Writable<any> = writable(null);
 export let rexpool:Writable<any> = writable(null);
+export let rexretpool:Writable<any> = writable(null);
 export let rawRexBalance:Writable<any> = writable(null);
 
 const chains = [
@@ -45,19 +46,19 @@ export default class WharfService {
         const { WalletPluginWombat } = await import("@wharfkit/wallet-plugin-wombat");
         const { WalletPluginTokenPocket } = await import("@wharfkit/wallet-plugin-tokenpocket");
         WharfService.sessionKit = new SessionKit({
-            appName: "eosstaking",
-            chains,
-            ui: new WebRenderer(),
-            walletPlugins: [
-                new WalletPluginAnchor(),
-                new WalletPluginScatter(),
-                new WalletPluginWombat(),
-                new WalletPluginTokenPocket(),
-            ],
-        },
-        {
-            transactPlugins: [new TransactPluginResourceProvider()],
-        })
+                appName: "eosstaking",
+                chains,
+                ui: new WebRenderer(),
+                walletPlugins: [
+                    new WalletPluginAnchor(),
+                    new WalletPluginScatter(),
+                    new WalletPluginWombat(),
+                    new WalletPluginTokenPocket(),
+                ],
+            },
+            {
+                transactPlugins: [new TransactPluginResourceProvider()],
+            })
 
         WharfService.client = new APIClient({
             url: Chains.EOS.url
@@ -65,6 +66,9 @@ export default class WharfService {
 
         const _rexpool = await WharfService.getRexPool();
         if(_rexpool) rexpool.set(_rexpool);
+
+        const _rexretpool = await WharfService.getRexRetPool();
+        if(_rexretpool) rexretpool.set(_rexretpool);
 
         const session = await WharfService.sessionKit.restore()
         if(session) {
@@ -110,6 +114,9 @@ export default class WharfService {
         const _rexpool = await WharfService.getRexPool();
         if(_rexpool) rexpool.set(_rexpool);
 
+        const _rexretpool = await WharfService.getRexRetPool();
+        if(_rexretpool) rexretpool.set(_rexretpool);
+
         await WharfService.getRexFund();
 
         const _unstakingBalances = await WharfService.getUnstakingBalances();
@@ -154,7 +161,7 @@ export default class WharfService {
             json: true,
         }).then((res:any) => {
             const row = res.rows.find((row:any) => row.balance.split(' ')[1] === 'EOS');
-            return row ? row.balance.split(' ')[0] : 0;
+            return row ? parseFloat(row.balance.split(' ')[0]) : 0;
         }).catch(err => {
             console.error(err)
             toast.error('There was a problem getting your EOS balance. Check the console for more information about what happened.')
@@ -237,17 +244,53 @@ export default class WharfService {
         });
     }
 
+    static async getRexRetPool(){
+        if(!WharfService.session && !WharfService.client) return;
+
+        let client = WharfService.session
+            ? WharfService.session.client
+            : WharfService.client;
+
+        return client!.v1.chain.get_table_rows({
+            code: "eosio",
+            scope: "eosio",
+            table: "rexretpool",
+            json: true,
+        }).then((res:any) => {
+            return res.rows[0];
+        }).catch(err => {
+            console.error(err)
+            toast.error('There was a problem getting the REX return pool. Check the console for more information about what happened.')
+            return null;
+        });
+    }
+
     static getApy(){
         if(!get(rexpool)) return 0;
+        if(!get(rexretpool)) return 0;
 
-        const pool = get(rexpool);
+        // {
+        //     const pool = get(rexpool);
+        //
+        //     // Instead of trying to fetch & calculate the annual reward, we know that it will be 31,250,000 EOS
+        //     // for the new tokenomics, so we can just divide that by the total staked, the only inconsistency will
+        //     // be that on testnets there will be an incorrect APY, but that's fine.
+        //     const annualReward = 31250000;
+        //     const totalStaked = parseInt(pool.total_lendable.split(' ')[0]);
+        //     return parseFloat(((annualReward / totalStaked) * 100).toString()).toFixed(2);
+        // }
+        {
+            const pool = get(rexpool);
+            const retpool = get(rexretpool);
 
-        // Instead of trying to fetch & calculate the annual reward, we know that it will be 31,250,000 EOS
-        // for the new tokenomics, so we can just divide that by the total staked, the only inconsistency will
-        // be that on testnets there will be an incorrect APY, but that's fine.
-        const annualReward = 31250000;
-        const totalStaked = parseInt(pool.total_lendable.split(' ')[0]);
-        return parseFloat(((annualReward / totalStaked) * 100).toString()).toFixed(2);
+            console.log('retpool', retpool);
+            console.log('pool', pool);
+
+            const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
+            const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
+            const proceeds = Int64.from(retpool.proceeds).toNumber();
+            return parseFloat(((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toFixed(2);
+        }
     }
 
     static async buyRex(eos:number){
