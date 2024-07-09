@@ -1,5 +1,5 @@
 <script>
-    import WharfService, {account, eosBalance, rexpool} from "$lib/wharf";
+    import WharfService, {account, eosBalance, rexpool, rexretpool} from "$lib/wharf";
     import TokenInput from "$lib/components/TokenInput.svelte";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
@@ -12,6 +12,7 @@
     $: rexReturn = WharfService.convertEosToRex(amount);
     $: apy = (() => {
         if(!$rexpool) return 0;
+        if(!$rexretpool) return 0;
         return WharfService.getApy();
     })();
 

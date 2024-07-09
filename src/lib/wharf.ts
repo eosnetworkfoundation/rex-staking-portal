@@ -283,9 +283,6 @@ export default class WharfService {
             const pool = get(rexpool);
             const retpool = get(rexretpool);
 
-            console.log('retpool', retpool);
-            console.log('pool', pool);
-
             const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
             const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
             const proceeds = Int64.from(retpool.proceeds).toNumber();
