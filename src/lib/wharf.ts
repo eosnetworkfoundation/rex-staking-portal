@@ -14,6 +14,7 @@ export let rexfund:Writable<any> = writable(null);
 export let rexpool:Writable<any> = writable(null);
 export let rexretpool:Writable<any> = writable(null);
 export let rawRexBalance:Writable<any> = writable(null);
+export let eosPrice:Writable<number> = writable(0);
 
 const chains = [
     Chains.EOS,
@@ -70,6 +71,8 @@ export default class WharfService {
         const _rexretpool = await WharfService.getRexRetPool();
         if(_rexretpool) rexretpool.set(_rexretpool);
 
+        WharfService.refreshEosPrice();
+
         const session = await WharfService.sessionKit.restore()
         if(session) {
             WharfService.session = session
@@ -117,7 +120,8 @@ export default class WharfService {
         const _rexretpool = await WharfService.getRexRetPool();
         if(_rexretpool) rexretpool.set(_rexretpool);
 
-        await WharfService.getRexFund();
+        WharfService.getRexFund();
+        WharfService.refreshEosPrice();
 
         const _unstakingBalances = await WharfService.getUnstakingBalances();
         if(_unstakingBalances) {
@@ -129,6 +133,15 @@ export default class WharfService {
 
     static delayedRefresh(){
         setTimeout(() => WharfService.refresh(), 1000);
+    }
+
+    static async refreshEosPrice(){
+        const price = await fetch('https://www.api.bloks.io/ticker/%5Bobject%20Object%5D').then(x => x.json()).then(x => x).catch(err => {
+            console.error('Error fetching EOS price', err);
+            return null;
+        })
+
+        if(price) eosPrice.set(price);
     }
 
     static convertEosToRex(eos:number){
@@ -263,6 +276,11 @@ export default class WharfService {
             toast.error('There was a problem getting the REX return pool. Check the console for more information about what happened.')
             return null;
         });
+    }
+
+    static getTotalStaked(){
+        if(!get(rexpool)) return 0;
+        return parseFloat(get(rexpool).total_lendable.split(' ')[0]);
     }
 
     static getApy(){

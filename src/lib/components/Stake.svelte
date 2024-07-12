@@ -6,10 +6,9 @@
     import {commaNumber, readableNumber} from "$lib";
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
-    import {toast} from "svelte-sonner";
+    import ApyChart from "$lib/components/ApyChart.svelte";
 
     let amount = 0;
-    $: rexReturn = WharfService.convertEosToRex(amount);
     $: apy = (() => {
         if(!$rexpool) return 0;
         if(!$rexretpool) return 0;
@@ -62,7 +61,8 @@
 
     <InfoRows class="mt-2" rows={[
         ["You will stake", `${commaNumber(amount)} EOS`, "opacity-70"],
-        ["Estimated yield", `${commaNumber(amount*(apy/100))} EOS`, "font-black !text-yellow-300"]
+        ["Estimated daily yield", `${commaNumber(amount*(apy/100)/365)} EOS`],
+        ["Estimated annual yield", `${commaNumber(amount*(apy/100))} EOS`, "font-black !text-yellow-300"]
     ]} />
 
     <InfoBox class="mt-10">

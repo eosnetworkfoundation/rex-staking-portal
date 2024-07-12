@@ -14,11 +14,13 @@
     import {isLive, showConfetti} from "$lib";
     import {goto} from "$app/navigation";
     import { page } from '$app/stores';
+    import Stats from "$lib/components/Stats.svelte";
 
     enum Panels {
         Stake = "stake",
         Unstake = "unstake",
         Claim = "claim",
+        Stats = "stats",
     }
 
     let activePanel: Panels = Panels.Stake;
@@ -54,14 +56,12 @@
 
         {#if activePanel === Panels.Stake}
             <Stake />
-        {/if}
-
-        {#if activePanel === Panels.Unstake}
+        {:else if activePanel === Panels.Unstake}
             <Unstake />
-        {/if}
-
-        {#if activePanel === Panels.Claim}
+        {:else if activePanel === Panels.Claim}
             <ClaimRewards />
+        {:else if activePanel === Panels.Stats}
+            <Stats />
         {/if}
 
 
