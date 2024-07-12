@@ -6,7 +6,6 @@ import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
 import {showConfetti} from "$lib/index";
 
-export let loadingFromChain:Writable<boolean> = writable(false);
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);
 export let rexBalance:Writable<number> = writable(0);
@@ -32,7 +31,7 @@ export let unstakingBalances:Writable<UnstakingBalance[]> = writable([]);
 const success = (msg:string) => {
     showConfetti.set(true);
     toast.success(msg);
-    WharfService.delayedRefresh();
+    setTimeout(() => WharfService.refresh(), 1000);
     setTimeout(() => showConfetti.set(false), 1500);
 }
 
@@ -108,7 +107,6 @@ export default class WharfService {
     }
 
     static async refresh(){
-
         if (!WharfService.session) return;
 
         const _eosBalance = await WharfService.getEosBalance();
@@ -129,10 +127,6 @@ export default class WharfService {
             const savings = _unstakingBalances.find((x:any) => x.savings);
             if(savings) rexBalance.set(parseFloat(savings.rex));
         }
-    }
-
-    static delayedRefresh(){
-        setTimeout(() => WharfService.refresh(), 1000);
     }
 
     static async refreshEosPrice(){
@@ -304,7 +298,9 @@ export default class WharfService {
             const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
             const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
             const proceeds = Int64.from(retpool.proceeds).toNumber();
-            return parseFloat(((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toFixed(2);
+            return parseFloat(
+                (((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toString()
+            ).toFixed(2);
         }
     }
 

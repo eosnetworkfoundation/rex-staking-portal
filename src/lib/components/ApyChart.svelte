@@ -71,19 +71,22 @@
                 x: {
                     title: {
                         display: true,
-                        text: 'EOS Staked Into REX',
                         color: '#FFFFFF',
-                        font: {
-                            size: 16
-                        }
                     },
                     ticks: {
                         color: '#FFFFFF'
+                    },
+                    grid: {
+                        color: 'rgba(255, 99, 132, 0.3)',
+                        display: true
                     }
                 },
                 y: {
                     ticks: {
-                        color: '#FFFFFF'
+                        color: 'rgba(255, 255, 255, 0.4)',
+                    },
+                    grid: {
+                        display: false
                     }
                 }
             },
@@ -106,4 +109,5 @@
 <section class="{clazz}">
     <canvas bind:this={canvas} {width} {height}>
 
+    <iframe width="640px" height="360px" src="https://defillama.com/chart/protocol/eos-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
 </section>

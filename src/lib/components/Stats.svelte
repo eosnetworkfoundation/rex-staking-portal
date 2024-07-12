@@ -24,7 +24,7 @@
 
     <section class="flex justify-between relative max-lg:flex-col">
         <section class="max-lg:mt-4">
-            <figure class="text-sm font-black">~Daily Yield 🔥</figure>
+            <figure class="text-sm font-black">~Daily Yield</figure>
             <h1 class="text-yellow-300 text-3xl font-black -mt-1 text-shadow">{parseFloat(apy/365).toFixed(3)}%</h1>
         </section>
         <section class="lg:text-right max-lg:mt-4">
@@ -46,5 +46,15 @@
         </section>
     </section>
 
-    <ApyChart class="mt-10" />
+    <section class="mt-10">
+        <figure class="text-xl font-bold text-center">
+            Staked EOS (TVL) vs APY
+        </figure>
+        <figure class="text-sm text-center">
+            The yellow dot below shows what the APY will be once reaching the next TVL target.
+            As more EOS is staked, the APY will decrease.
+        </figure>
+    </section>
+
+    <ApyChart class="mt-4" />
 </GlassBox>

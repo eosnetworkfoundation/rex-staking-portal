@@ -31,14 +31,14 @@
 
 <GlassBox class="mt-2 overflow-hidden">
     <figure class="bg-yellow-400 opacity-90 w-[200px] aspect-[4/4] rounded-full blur-[90px] absolute -top-[180px] -right-[100px] z-0"></figure>
-    <section class="flex justify-between relative max-lg:flex-col">
-        <section>
-            <figure class="text-sm">Minimum lockup</figure>
-            <h1 class="text-3xl font-bold -mt-1">21 Days</h1>
-        </section>
-        <section class="lg:text-right max-lg:mt-4">
+    <section class="flex justify-center relative max-lg:flex-col">
+<!--        <section>-->
+<!--            <figure class="text-sm">Minimum lockup</figure>-->
+<!--            <h1 class="text-3xl font-bold -mt-1">21 Days</h1>-->
+<!--        </section>-->
+        <section class="text-center max-lg:mt-4">
             <figure class="text-sm font-black">~APY 🔥</figure>
-            <h1 class="text-yellow-300 text-3xl font-black -mt-1 text-shadow">{apy}%</h1>
+            <h1 class="text-yellow-300 text-4xl font-black -mt-1 text-shadow">{apy}%</h1>
         </section>
     </section>
 
@@ -67,7 +67,9 @@
 
     <InfoBox class="mt-10">
         The APY is an estimate, and may fluctuate based on how many and much others are staking.
-        Your 21 day lockup period starts when you unstake your EOS.
+        <b class="text-white opacity-70">
+            Unstaking starts a 21 day timer.
+        </b>
         <br />
         <br />
         <u><b>You will never get back less EOS.</b></u>
