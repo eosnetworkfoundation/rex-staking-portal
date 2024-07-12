@@ -109,5 +109,6 @@
 <section class="{clazz}">
     <canvas bind:this={canvas} {width} {height}>
 
-    <iframe width="640px" height="360px" src="https://defillama.com/chart/protocol/eos-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
+
 </section>
+

@@ -57,4 +57,6 @@
     </section>
 
     <ApyChart class="mt-4" />
+
+    <iframe class="w-full aspect-video" src="https://defillama.com/chart/protocol/eos-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
 </GlassBox>
