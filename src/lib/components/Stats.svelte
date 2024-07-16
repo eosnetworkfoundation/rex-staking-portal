@@ -4,8 +4,7 @@
     import WharfService, {eosPrice, rexpool, rexretpool} from "$lib/wharf";
     import {readableNumber} from "$lib";
     import EOS from "$lib/svgs/EOS.svelte";
-
-    console.log('$eosPrice', $eosPrice)
+    import InfoBox from "$lib/components/InfoBox.svelte";
 
     $: apy = (() => {
         if(!$rexpool) return 0;
@@ -15,7 +14,6 @@
 
     $: totalStaked = (() => {
         if(!$rexpool) return 0;
-        if(!$rexretpool) return 0;
         return WharfService.getTotalStaked();
     })();
 </script>
@@ -58,5 +56,16 @@
 
     <ApyChart class="mt-4" />
 
+    <InfoBox class="-mt-2 mb-10">
+        The first month (8/7/2024-8/8/2024) of the staking program has slightly higher APY due to some doubling of rewards so the graph will show a lower APY than
+        what you are receiving.
+    </InfoBox>
+
+    <figure class="text-xl font-bold text-center">
+        Staked EOS (TVL)
+    </figure>
     <iframe class="w-full aspect-video" src="https://defillama.com/chart/protocol/eos-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
+    <figure class="text-sm text-center mt-2">
+        <a href="https://defillama.com/protocol/eos-rex?denomination=EOS" target="_blank" rel="noopener" class="text-yellow-400 underline">View on DefiLlama</a>
+    </figure>
 </GlassBox>

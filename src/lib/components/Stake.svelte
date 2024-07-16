@@ -7,6 +7,7 @@
     import LoadingSpinner from "$lib/components/LoadingSpinner.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
     import ApyChart from "$lib/components/ApyChart.svelte";
+    import EarnApyChart from "$lib/components/EarnApyChart.svelte";
 
     let amount = 0;
     $: apy = (() => {
@@ -65,10 +66,14 @@
         ["Estimated annual yield", `${commaNumber(amount*(apy/100))} EOS`, "font-black !text-yellow-300"]
     ]} />
 
+    {#if amount > 0}
+        <EarnApyChart class="mt-3" {amount} />
+    {/if}
+
     <InfoBox class="mt-10">
-        The APY is an estimate, and may fluctuate based on how many and much others are staking.
+        The APY is an estimate, and fluctuates based on the total amount of staked EOS.
         <b class="text-white opacity-70">
-            Unstaking starts a 21 day timer.
+            Unstaking starts a 21 day release timer.
         </b>
         <br />
         <br />

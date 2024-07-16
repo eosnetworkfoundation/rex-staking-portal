@@ -1,7 +1,7 @@
 <script lang="ts">
     import Chart from 'chart.js/auto';
     import {onMount} from "svelte";
-    import WharfService, {rexpool, rexretpool} from "$lib/wharf";
+    import WharfService, {rexpool} from "$lib/wharf";
 
 
     let clazz:string = '';
@@ -24,12 +24,7 @@
     const getChartData = () => {
         const labels = Array.from({length: 15}, (_, i) => (i + 1) * 50);
         const datasets = labels.map(stakedAmount => calculateAPY(stakedAmount*1000000));
-
         const totalStakedIndex = labels.findIndex(label => label > totalStaked/1000000);
-        // if(totalStakedIndex > 0) {
-        //     labels.splice(totalStakedIndex, 0, parseInt((totalStaked/1000000).toString()));
-        //     datasets.splice(totalStakedIndex, 0, calculateAPY(totalStaked));
-        // }
 
         const lineColor = 'white';
         const dotColor = 'rgba(255,255, 255, 0.2)';

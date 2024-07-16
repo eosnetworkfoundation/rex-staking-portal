@@ -277,7 +277,7 @@ export default class WharfService {
         return parseFloat(get(rexpool).total_lendable.split(' ')[0]);
     }
 
-    static getApy(){
+    static getApy(): number{
         if(!get(rexpool)) return 0;
         if(!get(rexretpool)) return 0;
 
@@ -298,9 +298,9 @@ export default class WharfService {
             const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
             const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
             const proceeds = Int64.from(retpool.proceeds).toNumber();
-            return parseFloat(
+            return parseFloat(parseFloat(
                 (((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toString()
-            ).toFixed(2);
+            ).toFixed(2));
         }
     }
 
