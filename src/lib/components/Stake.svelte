@@ -70,7 +70,7 @@
         <EarnApyChart class="mt-3" {amount} />
     {/if}
 
-    <InfoBox class="mt-10">
+    <InfoBox class="mt-5">
         The APY is an estimate, and fluctuates based on the total amount of staked EOS.
         <b class="text-white opacity-70">
             Unstaking starts a 21 day release timer.

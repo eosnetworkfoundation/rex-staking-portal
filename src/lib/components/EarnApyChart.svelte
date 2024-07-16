@@ -163,7 +163,7 @@
 </script>
 
 <section class="{clazz} border border-white border-opacity-45 rounded p-2">
-    <figure class="text-xs font-bold">Estimated yield over the next {chartDurationReadable}</figure>
+    <figure class="text-xs">Estimated yield over the next <b class="underline">{chartDurationReadable}</b> at this APY</figure>
     <section class="mt-1">
         <canvas bind:this={canvas} {width} {height}>
     </section>
