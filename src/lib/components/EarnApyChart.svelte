@@ -170,7 +170,7 @@
     <input type="range" class="w-full h-0.5 mb-2 bg-white bg-opacity-20 rounded-lg appearance-none cursor-pointer range-sm" bind:value={chartDurationInDays} min="90" max={365*10} step="1"/>
     <section class="flex justify-between text-xs opacity-40">
         <figure>90d</figure>
-        <figure>5yr</figure>
+        <figure>10yr</figure>
     </section>
 </section>
 
