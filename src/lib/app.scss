@@ -66,3 +66,17 @@ button {
 }
 
 
+
+// change thumb
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #777777;
+    height: 10px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+
+    &:hover {
+        background: white;
+    }
+}

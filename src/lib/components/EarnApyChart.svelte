@@ -164,9 +164,13 @@
 
 <section class="{clazz} border border-white border-opacity-45 rounded p-2">
     <figure class="text-xs font-bold">Estimated yield over the next {chartDurationReadable}</figure>
-    <input type="range" class="w-full h-1 mb-6 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700" bind:value={chartDurationInDays} min="90" max={365*10} step="1"/>
     <section class="mt-1">
         <canvas bind:this={canvas} {width} {height}>
+    </section>
+    <input type="range" class="w-full h-0.5 mb-2 bg-white bg-opacity-20 rounded-lg appearance-none cursor-pointer range-sm" bind:value={chartDurationInDays} min="90" max={365*10} step="1"/>
+    <section class="flex justify-between text-xs opacity-40">
+        <figure>90d</figure>
+        <figure>5yr</figure>
     </section>
 </section>
 
