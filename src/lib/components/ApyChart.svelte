@@ -8,7 +8,7 @@
     export {clazz as class};
 
     export let width = 800;
-    export let height = 400;
+    export let height = 200;
     let canvas, ctx, chart;
 
     function calculateAPY(stakedAmount:number) {
