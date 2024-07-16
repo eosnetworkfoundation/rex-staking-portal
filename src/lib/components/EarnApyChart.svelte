@@ -13,7 +13,14 @@
     export let height = 140;
     let canvas, ctx, chart;
 
-    const CHART_DURATION = 90;
+    let chartDurationInDays = 90;
+    $: chartDurationReadable = (() => {
+        if(chartDurationInDays < 365){
+            return `${chartDurationInDays} days`;
+        } else {
+            return `${parseFloat(parseFloat(chartDurationInDays / 365).toFixed(1))} years`;
+        }
+    })();
 
     $: apy = (() => {
         if(!$rexpool) return 0;
@@ -39,8 +46,8 @@
 
     const getChartData = () => {
 
-        const labels = Array.from({ length: CHART_DURATION }, (_, i) => `${i + 1}`);
-        const datasets = calculateYield(amount, apy, CHART_DURATION)
+        const labels = Array.from({ length: chartDurationInDays }, (_, i) => `${i + 1}`);
+        const datasets = calculateYield(amount, apy, chartDurationInDays)
         const datasetOfOnlyYield = datasets.map((balance, index) => {
             return balance - amount;
         });
@@ -66,12 +73,21 @@
         }
     })
 
+    let refreshTimeout;
+    const refresh = () => {
+        if(refreshTimeout) clearTimeout(refreshTimeout);
+        refreshTimeout = setTimeout(() => {
+            if(chart){
+                chart.data = getChartData();
+                chart.update();
+            }
+        }, 200);
+    }
+
     $: {
         amount = amount;
-        if(chart){
-            chart.data = getChartData();
-            chart.update();
-        }
+        chartDurationInDays = chartDurationInDays;
+        refresh();
     }
 
     onMount(() => {
@@ -147,7 +163,8 @@
 </script>
 
 <section class="{clazz} border border-white border-opacity-45 rounded p-2">
-    <figure class="text-xs font-bold">Estimated yield over the next {CHART_DURATION} days</figure>
+    <figure class="text-xs font-bold">Estimated yield over the next {chartDurationReadable}</figure>
+    <input type="range" class="w-full h-1 mb-6 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700" bind:value={chartDurationInDays} min="90" max={365*10} step="1"/>
     <section class="mt-1">
         <canvas bind:this={canvas} {width} {height}>
     </section>
