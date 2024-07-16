@@ -6,7 +6,6 @@ import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
 import {showConfetti} from "$lib/index";
 
-export let loadingFromChain:Writable<boolean> = writable(false);
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);
 export let rexBalance:Writable<number> = writable(0);
@@ -14,6 +13,7 @@ export let rexfund:Writable<any> = writable(null);
 export let rexpool:Writable<any> = writable(null);
 export let rexretpool:Writable<any> = writable(null);
 export let rawRexBalance:Writable<any> = writable(null);
+export let eosPrice:Writable<number> = writable(0);
 
 const chains = [
     Chains.EOS,
@@ -31,7 +31,7 @@ export let unstakingBalances:Writable<UnstakingBalance[]> = writable([]);
 const success = (msg:string) => {
     showConfetti.set(true);
     toast.success(msg);
-    WharfService.delayedRefresh();
+    setTimeout(() => WharfService.refresh(), 1000);
     setTimeout(() => showConfetti.set(false), 1500);
 }
 
@@ -70,6 +70,8 @@ export default class WharfService {
         const _rexretpool = await WharfService.getRexRetPool();
         if(_rexretpool) rexretpool.set(_rexretpool);
 
+        WharfService.refreshEosPrice();
+
         const session = await WharfService.sessionKit.restore()
         if(session) {
             WharfService.session = session
@@ -105,7 +107,6 @@ export default class WharfService {
     }
 
     static async refresh(){
-
         if (!WharfService.session) return;
 
         const _eosBalance = await WharfService.getEosBalance();
@@ -117,7 +118,8 @@ export default class WharfService {
         const _rexretpool = await WharfService.getRexRetPool();
         if(_rexretpool) rexretpool.set(_rexretpool);
 
-        await WharfService.getRexFund();
+        WharfService.getRexFund();
+        WharfService.refreshEosPrice();
 
         const _unstakingBalances = await WharfService.getUnstakingBalances();
         if(_unstakingBalances) {
@@ -127,8 +129,13 @@ export default class WharfService {
         }
     }
 
-    static delayedRefresh(){
-        setTimeout(() => WharfService.refresh(), 1000);
+    static async refreshEosPrice(){
+        const price = await fetch('https://www.api.bloks.io/ticker/%5Bobject%20Object%5D').then(x => x.json()).then(x => x).catch(err => {
+            console.error('Error fetching EOS price', err);
+            return null;
+        })
+
+        if(price) eosPrice.set(price);
     }
 
     static convertEosToRex(eos:number){
@@ -265,7 +272,12 @@ export default class WharfService {
         });
     }
 
-    static getApy(){
+    static getTotalStaked(){
+        if(!get(rexpool)) return 0;
+        return parseFloat(get(rexpool).total_lendable.split(' ')[0]);
+    }
+
+    static getApy(): number{
         if(!get(rexpool)) return 0;
         if(!get(rexretpool)) return 0;
 
@@ -286,7 +298,9 @@ export default class WharfService {
             const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
             const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
             const proceeds = Int64.from(retpool.proceeds).toNumber();
-            return parseFloat(((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toFixed(2);
+            return parseFloat(parseFloat(
+                (((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toString()
+            ).toFixed(2));
         }
     }
 

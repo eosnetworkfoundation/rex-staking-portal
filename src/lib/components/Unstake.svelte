@@ -11,8 +11,8 @@
     $: rexBalanceAsEos = WharfService.convertRexToEos($rexBalance);
     $: rexUnstaking = WharfService.convertEosToRex(amount);
 
-    // let twentyOneDaysFromNow = new Date();
-    // twentyOneDaysFromNow.setDate(twentyOneDaysFromNow.getDate() + 21);
+    let twentyOneDaysFromNow = new Date();
+    twentyOneDaysFromNow.setDate(twentyOneDaysFromNow.getDate() + 21);
 
     let loading = false;
     const buy = async () => {
@@ -45,8 +45,8 @@
     {/if}
 
     <InfoRows class="mt-2" rows={[
-        // ["Will be available to claim on", `${twentyOneDaysFromNow.toDateString()}`, "opacity-70"],
-        ["In 21 days you can claim", `${amount} EOS`, "font-black"]
+        ["Will be available to claim on", `${twentyOneDaysFromNow.toDateString()}`, "opacity-70"],
+        ["You are unstaking", `${amount} EOS`, "font-black"]
     ]} />
 
     <InfoBox class="mt-10">

@@ -41,5 +41,6 @@
         &:has(input:focus) {
             @apply border-yellow-400;
         }
+
     }
 </style>
