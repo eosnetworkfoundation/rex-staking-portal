@@ -1,7 +1,7 @@
 <script lang="ts">
     import Chart from 'chart.js/auto';
     import {onMount} from "svelte";
-    import WharfService, {rexpool} from "$lib/wharf";
+    import WharfService, {rexpool} from "$lib/services/wharf";
 
 
     let clazz:string = '';
@@ -102,7 +102,7 @@
 </script>
 
 <section class="{clazz}">
-    <canvas bind:this={canvas} {width} {height}>
+    <canvas bind:this={canvas} {width} {height} />
 
 
 </section>

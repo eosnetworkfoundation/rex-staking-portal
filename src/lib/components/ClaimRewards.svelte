@@ -1,5 +1,5 @@
 <script>
-    import WharfService, {eosBalance, rawRexBalance, rexBalance, unstakingBalances} from "$lib/wharf";
+    import WharfService, {eosBalance, rawRexBalance, rexBalance, unstakingBalances} from "$lib/services/wharf";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
     import {commaNumber, readableNumber} from "$lib";

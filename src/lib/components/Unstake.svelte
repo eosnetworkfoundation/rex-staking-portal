@@ -1,5 +1,5 @@
 <script>
-    import WharfService, {rexBalance} from "$lib/wharf";
+    import WharfService, {rexBalance} from "$lib/services/wharf";
     import TokenInput from "$lib/components/TokenInput.svelte";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";

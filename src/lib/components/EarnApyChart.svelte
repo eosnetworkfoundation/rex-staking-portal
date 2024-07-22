@@ -1,7 +1,7 @@
 <script lang="ts">
     import Chart from 'chart.js/auto';
     import {onMount} from "svelte";
-    import WharfService, {rexpool, rexretpool} from "$lib/wharf";
+    import WharfService, {rexpool, rexretpool} from "$lib/services/wharf";
     import {commaNumber, readableNumber} from "$lib";
 
     export let amount:number = 100;
@@ -165,7 +165,7 @@
 <section class="{clazz} border border-white border-opacity-45 rounded p-2">
     <figure class="text-xs">Estimated yield over the next <b class="underline">{chartDurationReadable}</b> at this APY</figure>
     <section class="mt-1">
-        <canvas bind:this={canvas} {width} {height}>
+        <canvas bind:this={canvas} {width} {height} />
     </section>
     <input type="range" class="w-full h-0.5 mb-2 bg-white bg-opacity-20 rounded-lg appearance-none cursor-pointer range-sm" bind:value={chartDurationInDays} min="90" max={365*10} step="1"/>
     <section class="flex justify-between text-xs opacity-40">

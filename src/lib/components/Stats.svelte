@@ -1,10 +1,12 @@
 <script>
     import GlassBox from "$lib/components/GlassBox.svelte";
     import ApyChart from "$lib/components/ApyChart.svelte";
-    import WharfService, {eosPrice, rexpool, rexretpool} from "$lib/wharf";
+    import WharfService, {eosPrice, rexpool, rexretpool} from "$lib/services/wharf";
     import {readableNumber} from "$lib";
     import EOS from "$lib/svgs/EOS.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
+    import {onMount} from "svelte";
+    import {HistoryService} from "$lib/services/history";
 
     $: apy = (() => {
         if(!$rexpool) return 0;
@@ -16,6 +18,8 @@
         if(!$rexpool) return 0;
         return WharfService.getTotalStaked();
     })();
+
+
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">

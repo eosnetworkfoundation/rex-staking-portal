@@ -1,5 +1,5 @@
 <script>
-    import WharfService, {account, eosBalance, rexpool, rexretpool} from "$lib/wharf";
+    import WharfService, {account, eosBalance, rexpool, rexretpool} from "$lib/services/wharf";
     import TokenInput from "$lib/components/TokenInput.svelte";
     import InfoRows from "$lib/components/InfoRows.svelte";
     import GlassBox from "$lib/components/GlassBox.svelte";
@@ -8,6 +8,7 @@
     import InfoBox from "$lib/components/InfoBox.svelte";
     import ApyChart from "$lib/components/ApyChart.svelte";
     import EarnApyChart from "$lib/components/EarnApyChart.svelte";
+    import UserHistory from "$lib/components/UserHistory.svelte";
 
     let amount = 0;
     $: apy = (() => {
@@ -31,6 +32,7 @@
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">
+    <UserHistory />
     <figure class="bg-yellow-400 opacity-90 w-[200px] aspect-[4/4] rounded-full blur-[90px] absolute -top-[180px] -right-[100px] z-0"></figure>
     <section class="flex justify-center relative max-lg:flex-col">
 <!--        <section>-->

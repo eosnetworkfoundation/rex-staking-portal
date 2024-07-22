@@ -4,7 +4,7 @@ import {get, writable, type Writable} from "svelte/store";
 import {TransactPluginResourceProvider} from "@wharfkit/transact-plugin-resource-provider";
 import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
-import {showConfetti} from "$lib/index";
+import {showConfetti} from "$lib";
 
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);

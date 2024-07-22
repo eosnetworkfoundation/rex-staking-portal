@@ -75,6 +75,7 @@ tmp
 
 # environment variable files
 .env
+.env.*
 
 # executables
 *.apk
