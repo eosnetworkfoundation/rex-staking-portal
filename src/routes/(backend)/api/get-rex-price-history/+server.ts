@@ -6,8 +6,6 @@ import {RexDateState} from "$lib/models/RexDateState";
 export async function GET({ request }) {
 
     try {
-        const earliestDate = '2024-07-07';
-
         const docs = await DatabaseBackend.query(collection => {
             return collection.where('docType', '==', 'rex_date_state')
         }, RexDateState)

@@ -1,5 +1,9 @@
 import { FireStore } from "$lib/services/firebase.backend";
 
+export enum COLLECTIONS {
+    RexActions  = 'rex_actions',
+}
+
 export class DatabaseBackend {
     static async insert(model:any, collection:string|null = null):Promise<boolean> {
         model.updatedAt = Date.now();

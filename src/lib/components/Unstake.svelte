@@ -8,7 +8,12 @@
     import InfoBox from "$lib/components/InfoBox.svelte";
 
     let amount = 0;
-    $: rexBalanceAsEos = WharfService.convertRexToEos($rexBalance);
+    const smallestRex = WharfService.convertEosToRex(0.0001)
+    $: rexBalanceAsEos = (() => {
+        const bal = WharfService.convertRexToEos($rexBalance);
+        if(bal < smallestRex) return 0;
+        return parseFloat(bal.toFixed(4));
+    })();
     $: rexUnstaking = WharfService.convertEosToRex(amount);
 
     let twentyOneDaysFromNow = new Date();
@@ -27,7 +32,6 @@
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">
-
     <TokenInput bind:amount={amount}
                 balance={rexBalanceAsEos}
                 suffix="staked"

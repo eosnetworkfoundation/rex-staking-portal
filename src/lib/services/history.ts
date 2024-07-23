@@ -11,21 +11,13 @@ export interface PurchaseOrSell {
     block_num: number;
 }
 
-export let purchases: Writable<PurchaseOrSell[]> = writable([]);
-export let sells: Writable<PurchaseOrSell[]> = writable([]);
-export let blockPrices: Writable<any> = writable({});
-export let blockBalances: Writable<any> = writable({});
-export let blockTimestamps: Writable<any> = writable({});
 export let rexStateHistory: Writable<RexDateState[]> = writable([]);
+
+export let userActions: Writable<any> = writable([]);
 
 const HYPERION_BASE = 'https://eos.hyperion.eosrio.io';
 
 export class HistoryService {
-    static async getHistory(){
-        if(!get(account)) return;
-        await this.getPurchases(get(account));
-        await this.getSells(get(account));
-    }
 
     static async getPurchases(account:string){
         const url = new URL(`${HYPERION_BASE}/v2/history/get_actions`);
@@ -36,12 +28,8 @@ export class HistoryService {
         url.searchParams.append('sort', 'desc');
         const result = await fetch(url.toString()).then(res => res.json());
         if(result.actions && result.actions.length){
-            purchases.set(result.actions.map((action: any) => {
+            return result.actions.map((action: any) => {
                 const data = action.act.data;
-                blockTimestamps.update((timestamps) => {
-                    timestamps[action.block_num] = +new Date(action.timestamp);
-                    return timestamps;
-                });
                 return {
                     amount: parseFloat(data.amount.split(' ')[0]),
                     trx_id: action.trx_id,
@@ -49,13 +37,10 @@ export class HistoryService {
                     block_id: action.block_id,
                     block_num: action.block_num
                 }
-            }));
-
-            for(let i = 0; i < get(purchases).length; i++){
-                const block = get(purchases)[i].block_num;
-                await this.fillBlockData(block);
-            }
+            });
         }
+
+        return [];
     }
 
     static async getSells(account:string){
@@ -63,66 +48,22 @@ export class HistoryService {
         url.searchParams.append('account', account);
         url.searchParams.append('filter', 'eosio:sellrex');
         url.searchParams.append('skip', '0');
-        url.searchParams.append('limit', '100');
+        url.searchParams.append('limit', '200');
         url.searchParams.append('sort', 'desc');
         const result = await fetch(url.toString()).then(res => res.json());
         if(result.actions && result.actions.length){
-            sells.set(result.actions.map((action: any) => {
+            return result.actions.map((action: any) => {
                 const data = action.act.data;
-                blockTimestamps.update((timestamps) => {
-                    timestamps[action.block_num] = +new Date(action.timestamp);
-                    return timestamps;
-                });
                 return {
                     amount: parseFloat(data.rex.split(' ')[0]),
                     trx_id: action.trx_id,
                     timestamp: action.timestamp,
-                    block_id: action.block_id,
                     block_num: action.block_num
                 }
-            }));
-
-            for(let i = 0; i < get(sells).length; i++){
-                const block = get(sells)[i].block_num;
-                await this.fillBlockData(block);
-            }
-        }
-    }
-
-    static async fillBlockData(block:number){
-        if(!get(blockPrices)[block]){
-            const price = await this.getPriceForBlock(block);
-            if(price){
-                blockPrices.update((prices) => {
-                    prices[block] = price;
-                    return prices;
-                });
-            }
+            });
         }
 
-        if(!get(blockBalances)[block]){
-            const balance = await this.getBalanceForBlock(block, get(account));
-            if(balance){
-                blockBalances.update((balances) => {
-                    balances[block] = balance;
-                    return balances;
-                });
-            }
-        }
-    }
-
-    static async getBalanceForBlock(block:number, account:string){
-        const url = new URL(`${HYPERION_BASE}/v2/history/get_deltas`);
-        url.searchParams.append('code', 'eosio');
-        url.searchParams.append('table', 'rexbal');
-        url.searchParams.append('payer', account);
-        url.searchParams.append('block_num', block.toString());
-        const result = await fetch(url.toString()).then(res => res.json());
-
-        if(result.deltas && result.deltas.length){
-            const balance = result.deltas[0].data;
-            return parseFloat(balance.rex_balance.split(' ')[0]);
-        }
+        return [];
     }
 
     static async getBlockRexState(buyrexBlock:number, donaterexBlock:number) {

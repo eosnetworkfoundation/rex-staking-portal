@@ -42,7 +42,6 @@ export async function GET({ request }) {
 
             const exists = await DatabaseBackend.exists(rexDateState.key());
             if(exists) {
-                console.log('exists', date);
                 continue;
             }
 

@@ -5,6 +5,7 @@ import {TransactPluginResourceProvider} from "@wharfkit/transact-plugin-resource
 import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
 import {showConfetti} from "$lib";
+import {Api} from "$lib/utils/api";
 
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);
@@ -78,6 +79,10 @@ export default class WharfService {
             account.set(session.actor.toString())
             setTimeout(() => WharfService.refresh());
         }
+
+        try {
+            setTimeout(() => Api.get('/api/process-rex-today'),1000);
+        } catch (e) {}
     }
 
     static async login(){
@@ -155,7 +160,7 @@ export default class WharfService {
         const R0 = parseFloat(pool.total_rex.split(' ')[0]);
         const R1 = R0 + rex;
         const S1 = (S0 * R1) / R0;
-        return parseFloat(parseFloat((S1 - S0).toString()).toFixed(4));
+        return parseFloat(parseFloat((S1 - S0).toString()).toFixed(9));
     }
 
     static async getEosBalance(){
