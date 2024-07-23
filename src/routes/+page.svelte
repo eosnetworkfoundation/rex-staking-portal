@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import { Confetti } from "svelte-confetti"
-    import WharfService, {account, eosBalance} from "$lib/wharf";
+    import WharfService, {account, eosBalance} from "$lib/services/wharf";
     import BackgroundOverlay from "$lib/components/BackgroundOverlay.svelte";
     import PanelSwitcher from "$lib/components/PanelSwitcher.svelte";
     import GetWallet from "$lib/components/GetWallet.svelte";

@@ -2,10 +2,12 @@
     import "$lib/app.scss";
     import { Toaster } from 'svelte-sonner'
     import GoogleAnalytics from "$lib/components/analytics/GoogleAnalytics.svelte";
+    import {onMount} from "svelte";
 
     const title = 'EOS Staking'
     const description = 'Stake your EOS tokens and earn rewards'
     const url = 'https://stake.eosnetwork.com'
+
 </script>
 
 <svelte:head>

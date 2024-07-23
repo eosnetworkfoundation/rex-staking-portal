@@ -1,10 +1,13 @@
 <script>
     import GlassBox from "$lib/components/GlassBox.svelte";
     import ApyChart from "$lib/components/ApyChart.svelte";
-    import WharfService, {eosPrice, rexpool, rexretpool} from "$lib/wharf";
+    import WharfService, {account, eosPrice, rexpool, rexretpool} from "$lib/services/wharf";
     import {readableNumber} from "$lib";
     import EOS from "$lib/svgs/EOS.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
+    import {onMount} from "svelte";
+    import {HistoryService} from "$lib/services/history";
+    import UserHistory from "$lib/components/UserHistory.svelte";
 
     $: apy = (() => {
         if(!$rexpool) return 0;
@@ -16,11 +19,17 @@
         if(!$rexpool) return 0;
         return WharfService.getTotalStaked();
     })();
+
+
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">
 
-    <section class="flex justify-between relative max-lg:flex-col">
+    {#if $account}
+        <UserHistory />
+    {/if}
+
+    <section class="flex justify-between relative max-lg:flex-col {$account ? 'mt-10' : ''}">
         <section class="max-lg:mt-4">
             <figure class="text-sm font-black">~Daily Yield</figure>
             <h1 class="text-yellow-300 text-3xl font-black -mt-1 text-shadow">{parseFloat(apy/365).toFixed(3)}%</h1>

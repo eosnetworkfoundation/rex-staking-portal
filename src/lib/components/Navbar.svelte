@@ -1,7 +1,7 @@
 <script lang="ts">
     import {generateIdenteapot} from "@teapotlabs/identeapots";
     import { slide } from "svelte/transition";
-    import WharfService, {account} from "$lib/wharf";
+    import WharfService, {account} from "$lib/services/wharf";
 
     $: connected = !!$account;
     let identipot: string|undefined;
