@@ -281,27 +281,27 @@ export default class WharfService {
         if(!get(rexpool)) return 0;
         if(!get(rexretpool)) return 0;
 
-        // {
-        //     const pool = get(rexpool);
-        //
-        //     // Instead of trying to fetch & calculate the annual reward, we know that it will be 31,250,000 EOS
-        //     // for the new tokenomics, so we can just divide that by the total staked, the only inconsistency will
-        //     // be that on testnets there will be an incorrect APY, but that's fine.
-        //     const annualReward = 31250000;
-        //     const totalStaked = parseInt(pool.total_lendable.split(' ')[0]);
-        //     return parseFloat(((annualReward / totalStaked) * 100).toString()).toFixed(2);
-        // }
         {
             const pool = get(rexpool);
-            const retpool = get(rexretpool);
 
-            const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
-            const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
-            const proceeds = Int64.from(retpool.proceeds).toNumber();
-            return parseFloat(parseFloat(
-                (((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toString()
-            ).toFixed(2));
+            // Instead of trying to fetch & calculate the annual reward, we know that it will be 31,250,000 EOS
+            // for the new tokenomics, so we can just divide that by the total staked, the only inconsistency will
+            // be that on testnets there will be an incorrect APY, but that's fine.
+            const annualReward = 31250000;
+            const totalStaked = parseInt(pool.total_lendable.split(' ')[0]);
+            return parseFloat(((annualReward / totalStaked) * 100).toString()).toFixed(2);
         }
+        // {
+        //     const pool = get(rexpool);
+        //     const retpool = get(rexretpool);
+        //
+        //     const total_lendable = Asset.fromString(pool.total_lendable).units.toNumber();
+        //     const current_rate_of_increase = Int64.from(retpool.current_rate_of_increase).toNumber();
+        //     const proceeds = Int64.from(retpool.proceeds).toNumber();
+        //     return parseFloat(parseFloat(
+        //         (((proceeds + current_rate_of_increase) / 30 * 365) / total_lendable * 100).toString()
+        //     ).toFixed(2));
+        // }
     }
 
     static async buyRex(eos:number){
