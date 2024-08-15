@@ -5,6 +5,7 @@ import {TransactPluginResourceProvider} from "@wharfkit/transact-plugin-resource
 import { WalletPluginAnchor } from "@wharfkit/wallet-plugin-anchor"
 import { toast } from 'svelte-sonner'
 import {showConfetti} from "$lib/index";
+import {AnalyticsService} from "$lib/analytics";
 
 export let account:Writable<string|null> = writable(null);
 export let eosBalance:Writable<number> = writable(0);
@@ -352,6 +353,12 @@ export default class WharfService {
             actions
         } as any).then(x => {
             success(`Successfully staked ${eos} EOS!`);
+
+            AnalyticsService.pushEvent('staked', {
+                eos,
+                account: WharfService.session?.actor.toString(),
+            })
+
             return x;
         }).catch(err => {
             console.error(err)
@@ -394,6 +401,14 @@ export default class WharfService {
             ]
         } as any).then(x => {
             success(`Successfully unstaked ${WharfService.convertRexToEos(rex)} EOS!`);
+
+            AnalyticsService.pushEvent('unstaked', {
+                rex,
+                eos: WharfService.convertRexToEos(rex),
+                account: WharfService.session?.actor.toString(),
+            })
+
+
             return x;
         }).catch(err => {
             console.error(err)
@@ -465,6 +480,13 @@ export default class WharfService {
             actions: actions as any
         }).then(x => {
             success(`Successfully claimed ${totalEos} EOS!`);
+
+            AnalyticsService.pushEvent('claimed', {
+                rex: claimable,
+                eos: totalEos,
+                account: WharfService.session?.actor.toString(),
+            })
+
             return x;
         }).catch(err => {
             console.error(err)
