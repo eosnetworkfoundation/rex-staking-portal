@@ -278,7 +278,7 @@ export default class WharfService {
         return parseFloat(get(rexpool).total_lendable.split(' ')[0]);
     }
 
-    static getApy(): number{
+    static getApy(): number|string {
         if(!get(rexpool)) return 0;
         if(!get(rexretpool)) return 0;
 

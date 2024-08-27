@@ -2,6 +2,8 @@
     import "$lib/app.scss";
     import { Toaster } from 'svelte-sonner'
     import GoogleAnalytics from "$lib/components/analytics/GoogleAnalytics.svelte";
+    import {onMount} from "svelte";
+    import {AnalyticsService} from "$lib/analytics";
 
     const title = 'EOS Staking'
     const description = 'Stake your EOS tokens and earn rewards'
@@ -36,7 +38,7 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<GoogleAnalytics />
+<!--<GoogleAnalytics />-->
 
 <Toaster />
 
