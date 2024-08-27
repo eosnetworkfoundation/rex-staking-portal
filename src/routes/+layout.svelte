@@ -9,15 +9,27 @@
     const description = 'Stake your EOS tokens and earn rewards'
     const url = 'https://stake.eosnetwork.com'
 
-
-    // Google Tag Manager
-    onMount(() => {
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-55DJZH9B');
-    })
+    // onMount(() => {
+    //     // return false;
+    //     setTimeout(() => {
+    //         AnalyticsService.pushEvent('staked', {
+    //             eos: 1337,
+    //             account: 'testaccount'
+    //         })
+    //
+    //         AnalyticsService.pushEvent('unstaked', {
+    //             eos: 7331,
+    //             rex: 1337,
+    //             account: 'testaccount'
+    //         })
+    //
+    //         AnalyticsService.pushEvent('claimed', {
+    //             eos: 1234,
+    //             rex: 4321,
+    //             account: 'testaccount'
+    //         })
+    //     }, 1000)
+    // })
 
 </script>
 
@@ -33,15 +45,9 @@
     <meta property="og:description" content={description} />
     <meta property="og:url" content={url} />
     <meta property="og:site_name" content={title} />
-
 </svelte:head>
 
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-55DJZH9B"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<!--<GoogleAnalytics />-->
+<GoogleAnalytics />
 
 <Toaster />
 
