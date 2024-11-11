@@ -1,6 +1,7 @@
 <script lang="ts">
     import {createEventDispatcher} from "svelte";
     import EOS from "$lib/svgs/EOS.svelte";
+    import LogoIcon from "$lib/svgs/LogoIcon.svelte";
 
     const dispatch = createEventDispatcher();
 
@@ -14,7 +15,7 @@
 
 <section class="{clazz} token-input rounded-lg flex items-center">
     <section class="px-4 mr-2">
-        <EOS />
+        <LogoIcon width={32} />
     </section>
 
     <input class="w-full text-2xl outline-0 bg-transparent" type="number" bind:value={amount} />

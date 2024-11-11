@@ -5,6 +5,7 @@
     import {readableNumber} from "$lib";
     import EOS from "$lib/svgs/EOS.svelte";
     import InfoBox from "$lib/components/InfoBox.svelte";
+    import LogoIcon from "$lib/svgs/LogoIcon.svelte";
 
     $: apy = (() => {
         if(!$rexpool) return 0;
@@ -35,7 +36,7 @@
         <section>
             <figure class="text-sm">TVL (EOS)</figure>
             <h1 class="text-3xl font-bold -mt-1 flex">
-                <EOS width={16} class="mr-1" />
+                <LogoIcon width={24} class="mr-1" />
                 {readableNumber(totalStaked)}</h1>
         </section>
         <section class="lg:text-right max-lg:mt-4">
