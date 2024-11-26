@@ -47,24 +47,6 @@ package
 target
 tmp
 
-# data files
-*.csv
-*.db
-*.dbf
-*.fods
-*.json
-*.ods
-*.odt
-*.ots
-*.sqlite
-*.tsv
-*.uos
-*.xls
-*.xlsm
-*.xlsx
-*.xlt
-*.xltx
-*.xml
 
 # editor files
 .ccls-cache
