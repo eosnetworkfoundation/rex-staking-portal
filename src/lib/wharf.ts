@@ -46,6 +46,9 @@ export default class WharfService {
         const { WalletPluginScatter } = await import("@wharfkit/wallet-plugin-scatter");
         const { WalletPluginWombat } = await import("@wharfkit/wallet-plugin-wombat");
         const { WalletPluginTokenPocket } = await import("@wharfkit/wallet-plugin-tokenpocket");
+        const { WalletPluginMetaMask } = await import("@wharfkit/wallet-plugin-metamask");
+
+
         WharfService.sessionKit = new SessionKit({
                 appName: "eosstaking",
                 chains,
@@ -55,6 +58,7 @@ export default class WharfService {
                     new WalletPluginScatter(),
                     new WalletPluginWombat(),
                     new WalletPluginTokenPocket(),
+                    new WalletPluginMetaMask(),
                 ],
             },
             {
