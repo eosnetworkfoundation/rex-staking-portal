@@ -81,14 +81,31 @@
                 <h3>9.1 Platform Provided “As Is”</h3>
                 <p>The Platform and related services are provided on an “as-is” and “as-available” basis without warranties of any kind, either express or implied.</p>
 
+                <h3>9.2 No Warranty</h3>
+                <p>We do not warrant that the Platform will be uninterrupted, error-free, secure, or free of viruses or other harmful components.</p>
+
+                <h3>9.3 Limitation of Liability</h3>
+                <p>To the fullest extent permitted by law, in no event shall we, our affiliates, directors, officers, employees, or agents be liable for any direct, indirect, incidental, special, consequential, or exemplary damages arising out of or in connection with the use of the Platform or any staking activities. This limitation applies to all causes of action, whether in contract, tort (including negligence), or otherwise.</p>
+
                 <h2>10. Indemnification</h2>
                 <p>You agree to indemnify, defend, and hold harmless the Platform operators, and their respective affiliates, officers, directors, employees, and agents from and against any and all claims, liabilities, damages, losses, or expenses (including reasonable attorneys’ fees) arising out of or in any way connected with your use of the Platform, your breach of these Terms, or your violation of any law or the rights of any third party.</p>
 
                 <h2>11. Amendments to Terms</h2>
-                <p>We reserve the right, in our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide advance notice through the Platform or by other reasonable means.</p>
+                <p>We reserve the right, in our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide advance notice through the Platform or by other reasonable means. Your continued use of the Platform after the effective date of any updated Terms constitutes acceptance of those changes.</p>
 
                 <h2>12. Governing Law and Dispute Resolution</h2>
-                <p>These Terms shall be governed by the laws of the Province of Alberta and the federal laws of Canada applicable therein.</p>
+                <h3>12.1 Governing Law</h3>
+                <p>These Terms and any non-contractual obligations arising out of or in connection with them shall be governed by and construed in accordance with the laws of the Province of Alberta and the federal laws of Canada applicable therein.</p>
+
+                <h3>12.2 Dispute Resolution</h3>
+                <p>Any dispute arising out of or relating to these Terms, including their validity, interpretation, or enforceability, shall be subject to the exclusive jurisdiction of the courts located in the Province of Alberta, Canada, unless otherwise required by applicable law.</p>
+
+                <h2>13. Severability</h2>
+                <p> If any provision of these Terms is found by a court of competent jurisdiction to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+
+                <h2>14. Entire Agreement</h2>
+                <p> These Terms, together with the Privacy Policy and any other legal notices published on the Platform, constitute the entire agreement between you and us regarding the subject matter herein, superseding any prior agreements or understandings.</p>
+
 
                 <h2>15. Contact Information</h2>
                 <p>For questions, concerns, or disputes, please contact us at: <a href="mailto:legal@eosnetwork.com">legal@eosnetwork.com</a></p>
