@@ -110,6 +110,7 @@
                 <h2>15. Contact Information</h2>
                 <p>For questions, concerns, or disputes, please contact us at: <a href="mailto:legal@eosnetwork.com">legal@eosnetwork.com</a></p>
 
+                <hr class="py-5 mt-10" />
                 <p><strong>BY USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREED TO THESE TERMS AND CONDITIONS.</strong></p>
             </GlassBox>
             <section class="text-white max-w-2xl w-full px-4">
@@ -156,5 +157,10 @@
     a {
         color: #00FFD1;
         text-decoration: underline;
+    }
+
+    ul {
+        list-style-type: disc;
+        margin-left: 1.5rem;
     }
 </style>
