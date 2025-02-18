@@ -64,6 +64,10 @@
             <Stats />
         {/if}
 
+        <section class="mt-2 text-white flex justify-center items-center text-xs">
+            <p>By using this site you are agreeing to the <a href="/terms" target="_blank" class="underline">Terms & Conditions</a>
+        </section>
+
 
         {#if !$account}
             <GetWallet />

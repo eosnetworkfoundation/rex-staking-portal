@@ -431,7 +431,7 @@ export default class WharfService {
     static claimableBalances(){
         const now = +new Date();
         return get(unstakingBalances).filter(x => {
-            return +x.date < now;
+            return +x.date <= now;
         });
     }
 
