@@ -112,6 +112,8 @@
 
                 <hr class="py-5 mt-10" />
                 <p><strong>BY USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREED TO THESE TERMS AND CONDITIONS.</strong></p>
+                <hr class="py-5 mt-10" />
+                <p>The Website is operated by the EOS Network Foundation, with address at 3000, 700-9th Avenue, SW, Calgary, Alberta, T2P 3V4, Canada</p>
             </GlassBox>
             <section class="text-white max-w-2xl w-full px-4">
 
