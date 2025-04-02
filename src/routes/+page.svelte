@@ -37,7 +37,7 @@
 </script>
 
 
-<section class="bg-black w-full min-h-screen relative overflow-x-hidden px-2">
+<section class="w-full min-h-screen relative overflow-x-hidden px-2">
     <BackgroundOverlay />
     <BlurryBg />
 

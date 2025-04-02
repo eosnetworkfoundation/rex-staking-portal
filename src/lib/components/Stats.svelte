@@ -36,7 +36,7 @@
         <section>
             <figure class="text-sm">TVL (EOS)</figure>
             <h1 class="text-3xl font-bold -mt-1 flex">
-                <LogoIcon width={24} class="mr-1" />
+                <LogoIcon width={30} class="mr-2" />
                 {readableNumber(totalStaked)}</h1>
         </section>
         <section class="lg:text-right max-lg:mt-4">

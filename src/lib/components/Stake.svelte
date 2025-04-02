@@ -31,7 +31,6 @@
 </script>
 
 <GlassBox class="mt-2 overflow-hidden">
-    <figure class="bg-yellow-400 opacity-90 w-[200px] aspect-[4/4] rounded-full blur-[90px] absolute -top-[180px] -right-[100px] z-0"></figure>
     <section class="flex justify-center relative max-lg:flex-col">
 <!--        <section>-->
 <!--            <figure class="text-sm">Minimum lockup</figure>-->

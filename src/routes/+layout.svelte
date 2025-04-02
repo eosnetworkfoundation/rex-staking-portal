@@ -51,4 +51,10 @@
 
 <Toaster />
 
+<figure class="bg-black fixed top-0 left-0 w-full h-full z-0" style="height:100vh;">
+    <img style="object-fit: cover; height:100%; min-height: 100%; width:100%;" src="/images/bg.webp" alt="EOS Staking" />
+    <!-- bottom gradient to black -->
+    <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent"></div>
+</figure>
+
 <slot />
