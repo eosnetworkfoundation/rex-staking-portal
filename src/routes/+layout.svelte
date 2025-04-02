@@ -5,8 +5,8 @@
     import {onMount} from "svelte";
     import {AnalyticsService} from "$lib/analytics";
 
-    const title = 'EOS Staking'
-    const description = 'Stake your EOS tokens and earn rewards'
+    const title = 'Vaulta Staking'
+    const description = 'Stake your Vaulta tokens and earn rewards'
     const url = 'https://stake.eosnetwork.com'
 
     // onMount(() => {
