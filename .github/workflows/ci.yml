@@ -1,0 +1,87 @@
+name: Staking Portal CI
+
+on: [push, workflow_dispatch]
+
+jobs:
+  documentation:
+    name: Attach Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'false'
+
+      - name: Attach Documentation
+        run: cat .github/workflows/ci.md >> $GITHUB_STEP_SUMMARY
+
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20]
+
+    name: Build rex-staking-portal - nodeJS v${{ matrix.node-version }}
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup node v${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Init - node v${{ matrix.node-version }}
+        run: yarn --frozen-lockfile --non-interactive
+
+      - name: Lint - node v${{ matrix.node-version }}
+        run: yarn check
+
+      - name: Static Build - node v${{ matrix.node-version }}
+        run: .github/workflows/build.sh
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-node-${{ matrix.node-version }}
+          path: dist.tar.gz
+
+  aws:
+    name: Publish rex-staking-portal
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Determine AWS Context
+        id: aws-context
+        run: .github/workflows/aws-context.sh
+        env:
+          STAKING_PROD_IAM_ARN: ${{ secrets.STAKING_PROD_IAM_ARN }}
+          STAKING_RO_IAM_ARN: ${{ secrets.STAKING_RO_IAM_ARN }}
+
+      - name: Authenticate to AWS
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ steps.aws-context.outputs.role-arn }}
+          role-duration-seconds: 900
+
+      - name: Download Matrix Artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Publish Website
+        run: .github/workflows/publish.sh
+        env:
+          CF_DISTRIBUTION: ${{ secrets.STAKING_PROD_CF_DISTRIBUTION }}
+          DRY_RUN: ${{ steps.aws-context.outputs.dry-run }}
+          S3_BUCKET: ${{ secrets.STAKING_PROD_S3_BUCKET }}
