@@ -65,8 +65,8 @@
     <figure class="text-xl font-bold text-center">
         Staked EOS (TVL)
     </figure>
-    <iframe class="w-full aspect-[4/3]" src="https://defillama.com/chart/protocol/eos-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
+    <iframe class="w-full aspect-[4/3]" src="https://defillama.com/chart/protocol/vaulta-rex?denomination=EOS&theme=dark" title="DefiLlama" frameborder="0"></iframe>
     <figure class="text-sm text-center mt-2">
-        <a href="https://defillama.com/protocol/eos-rex?denomination=EOS" target="_blank" rel="noopener" class="text-yellow-400 underline">View on DefiLlama</a>
+        <a href="https://defillama.com/protocol/vaulta-rex?denomination=EOS" target="_blank" rel="noopener" class="text-yellow-400 underline">View on DefiLlama</a>
     </figure>
 </GlassBox>
