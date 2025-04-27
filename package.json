@@ -28,7 +28,7 @@
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-netlify": "^4.3.1",
     "@sveltejs/adapter-static": "^3.0.2",
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^2.8.3",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@teapotlabs/identeapots": "^1.0.8",
     "@wharfkit/antelope": "^1.0.7",
